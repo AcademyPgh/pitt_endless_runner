@@ -23,12 +23,16 @@ const animations: {[key in States]: Animation} = {
 export class Player extends Actor {
   constructor() {
     super({
-      pos: vec(50, 200),
-      vel: vec(0, 10),
       z: 100,
       collisionType: CollisionType.Active,
       collider: Shape.Box(39, 34)
     });
+    this.resetPlayer()
+  }
+
+  resetPlayer(){
+    this.pos = vec(50, 200)
+    this.vel = vec(0, 10)
   }
 
   private state = States.run;
@@ -39,9 +43,6 @@ export class Player extends Actor {
     this.graphics.add(animations[FALL]);
     this.graphics.add(animations[LAND]);
     this.graphics.use(animations[this.state]);
-    this.on('pointerup', () => {
-      alert('yo');
-    });
   }
 
   onPreUpdate(engine: Engine, delta: number): void {
@@ -70,13 +71,17 @@ export class Player extends Actor {
 
   onCollisionStart(self: Collider, other: Collider, side: Side, contact: CollisionContact): void {
     if (side === Side.Bottom) {
-      this.state = States.run;
-      this.graphics.use(animations[this.state]);
-      this.vel.y = 0;
+      this.playerRun()
     }
     if (side === Side.Left || side === Side.Right) {
       this.vel.x = 0;
     }
+  }
+
+  playerRun(){
+    this.state = States.run;
+      this.graphics.use(animations[this.state]);
+      this.vel.y = 0;
   }
 
   onCollisionEnd(self: Collider, other: Collider, side: Side, lastContact: CollisionContact): void {

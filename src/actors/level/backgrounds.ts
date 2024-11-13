@@ -69,16 +69,15 @@ class LevelBackground extends Actor {
 class WorldBackground extends Actor {
   private layers: LevelBackground[];
   private speed: number;
-
-  constructor(layers: LevelBackground[], speed: number) {
+  constructor() {
     super({
       width: 500,
       height: 270,
       pos: vec(250, 135),
       z: 0
     });
-    this.layers = layers;
-    this.speed = speed;
+    this.layers = [new LevelBackground(clouds), new LevelBackground(city), new LevelBackground(cathedral)]
+    this.speed = bgSpeed;
   }
 
   setSpeed(speed: number): void {
@@ -88,7 +87,7 @@ class WorldBackground extends Actor {
     }
   }
 
-  onInitialize(engine: Engine): void {
+  onInitialize(): void {
     this.setSpeed(this.speed);
     for(let i = 0; i < this.layers.length; i++) {
       this.layers[i].z = i;
@@ -97,24 +96,17 @@ class WorldBackground extends Actor {
   }
 }
 
+const bgSpeed = -60;
+
 const clouds = [
   Resources.background.cloudscape1,
   Resources.background.cloudscape2,
   Resources.background.cloudscape3,
   Resources.background.cloudscape4
 ]
-const cloudlayer = new LevelBackground(clouds);
-const city = [
-  Resources.background.city
-]
-const citylayer = new LevelBackground(city);
-const cathedral = [
-  Resources.background.cathedral,
-  Resources.background.noCathedral
-]
-const cathedrallayer = new LevelBackground(cathedral);
+const cathedral = [Resources.background.cathedral,Resources.background.noCathedral]
+const city = [Resources.background.city]
 
-const Background = new WorldBackground([cloudlayer, citylayer, cathedrallayer], -60);
-// const Background = new WorldBackground([cloudlayer], 1);
 
-export { Background };
+
+export { WorldBackground };

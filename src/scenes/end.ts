@@ -29,7 +29,7 @@ class EndScene extends ex.Scene {
   }
 
   resetGame(engine: ex.Engine){
-    engine.goToScene('level')
+    engine.goToScene('start')
   }
 
   onActivate() {

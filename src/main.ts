@@ -1,4 +1,5 @@
 import { Engine, Actor } from "excalibur";
+import { startScene } from "./scenes/start";
 import { mainLevel } from "./scenes/level";
 import { endScene } from "./scenes/end";
 import { loader } from "./resources";
@@ -11,13 +12,14 @@ class Game extends Engine {
         pixelArt: true,
         pixelRatio: 2,
         scenes: {
+          start: startScene,
           level: mainLevel,
           end: endScene
         }
       });
     }
     initialize() {
-      this.start(loader).then(() => super.goToScene('level'))
+      this.start(loader).then(() => super.goToScene('start'))
     }
   }
   

@@ -1,7 +1,8 @@
-import { Engine, Scene, Actor, Keys, World } from 'excalibur';
+import { Engine, Scene, Keys } from 'excalibur';
 import { Player } from '../actors/player/player';
 import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
+import { startScene } from './start';
 
 class Level extends Scene {
   private baseSpeed = 100;
@@ -21,7 +22,7 @@ class Level extends Scene {
     this.clear()
     var bg = new WorldBackground;
     this.add(bg);
-    this.player = new Player();
+    this.player = new Player(startScene.playerSkin);
     this.add(this.player);
     
     this.floors = new Floors()

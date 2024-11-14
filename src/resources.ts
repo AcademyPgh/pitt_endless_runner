@@ -1,5 +1,5 @@
 import { ImageSource, SpriteSheet, Loader } from "excalibur";
-import playerSheet from "./images/playerSheet.png";
+
 import cathedralSkyline from "./images/cathedralSkyline.png";
 import citySkyline from "./images/citySkyline.png";
 import cloudscape1 from "./images/Cloudscape1.png";
@@ -8,10 +8,14 @@ import cloudscape3 from "./images/Cloudscape3.png";
 import cloudscape4 from "./images/Cloudscape4.png";
 import noCathedralSkyline from "./images/noCatherdralSkyline.png";
 
+//add new character sheets here
+import playerBlack from "./images/playerSheet.png";
+import playerBlue from "./images/playerSheet.png";
+const sheets = [playerBlack, playerBlue]
+
 export const Resources = {
-  player: {
-    Sheet: new ImageSource(playerSheet)
-  },
+  sheets: 
+    sheets.map(sheet => {return new ImageSource(sheet)}),
   background: {
     cathedral: new ImageSource(cathedralSkyline),
     city: new ImageSource(citySkyline),
@@ -23,14 +27,16 @@ export const Resources = {
   }
 } as const;
 
-export const playerSpriteSheet = SpriteSheet.fromImageSource({
-  image: Resources.player.Sheet,
-  grid: {
-    columns: 6,
-    rows: 1,
-    spriteWidth: 39,
-    spriteHeight: 34
-  }
+export const playerSheets = Resources.sheets.map(source => {
+  return SpriteSheet.fromImageSource({
+    image: source,
+    grid: {
+      columns: 6,
+      rows: 1,
+      spriteWidth: 39,
+      spriteHeight: 34
+    }
+})
 })
 
 export const loader = new Loader();

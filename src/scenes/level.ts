@@ -4,6 +4,7 @@ import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
 
 class Level extends Scene {
+  private baseSpeed = 100;
   private floors = new Floors();
   private speed: number = 100;
   private speedTimer: number = 0;
@@ -24,7 +25,9 @@ class Level extends Scene {
     this.add(this.player);
     
     this.floors = new Floors()
-    this.add(new Floors());
+    this.add(this.floors);
+    this.speed = this.baseSpeed
+    this.floors.setSpeed(this.speed)
     this.score = 0;
   }
 

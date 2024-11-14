@@ -18,7 +18,7 @@ const animations: {[key in States]: Animation} = {
   [JUMP]: Animation.fromSpriteSheet(playerSpriteSheet, [1], 150),
   [FALL]: Animation.fromSpriteSheet(playerSpriteSheet, [0], 150),
   [LAND]: Animation.fromSpriteSheet(playerSpriteSheet, [3, 4, 5], 150)
-}
+} 
 
 export class Player extends Actor {
   constructor() {

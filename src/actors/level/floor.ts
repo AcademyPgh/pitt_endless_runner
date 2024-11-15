@@ -1,4 +1,4 @@
-import { Actor, Color, CollisionType, Shape, vec, Engine } from 'excalibur';
+import { Actor, Color, CollisionType, Shape,  Engine } from 'excalibur';
 import { Queue } from './Queue';
 
 const makeFloor = (x: number, y: number, width: number, height: number) => {

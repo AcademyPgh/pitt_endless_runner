@@ -1,4 +1,5 @@
 import { Actor, vec, Animation, CollisionType, Collider, CollisionContact, Side, Shape, Engine, Keys, SpriteSheet } from "excalibur";
+import { Resources } from "../../resources";
 
 const RUN = "RUN";
 const JUMP = "JUMP";
@@ -17,6 +18,8 @@ const enum States {
 const jumpMax = 250
 const jumpStrength = 200
 const gravityStrength = 600;
+const playerXtarget = 50;
+const recoveryVelocity = 10;
 
 export class Player extends Actor {
   private animations: Record<States, Animation>
@@ -42,7 +45,7 @@ export class Player extends Actor {
   }
 
   resetPlayer(){
-    this.pos = vec(50, 200)
+    this.pos = vec(playerXtarget, 200)
     this.vel = vec(0, 10)
   }
 
@@ -69,6 +72,7 @@ export class Player extends Actor {
         this.state = States.jump;
         this.graphics.use(this.animations[this.state]);
         this.jumpTimer = 0;
+        Resources.sounds.jump.play(.5)
       }
       else if(engine.input.keyboard.wasReleased(Keys.Space))
         {
@@ -78,6 +82,11 @@ export class Player extends Actor {
       if(this.jumpTimer < jumpMax && engine.input.keyboard.isHeld(Keys.Space)){
         this.vel.y = -jumpStrength;
         this.jumpTimer += delta
+      }
+
+      if(this.pos.x != playerXtarget){
+        let direction = Math.sign(playerXtarget - this.pos.x)
+        this.vel.x = direction * recoveryVelocity
       }
   }
 

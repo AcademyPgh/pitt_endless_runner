@@ -34,6 +34,7 @@ public playerSkin: ex.SpriteSheet;
         height: 30,
         color: ex.Color.Orange
     })
+    buttonActor.graphics.use(skin.sprites[0])
     buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine))
     this.add(buttonActor)
   }

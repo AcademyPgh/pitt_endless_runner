@@ -3,6 +3,7 @@ import { Player } from '../actors/player/player';
 import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
 import { startScene } from './start';
+import { Resources } from '../resources';
 
 class Level extends Scene {
   private baseSpeed = 100;
@@ -30,6 +31,8 @@ class Level extends Scene {
     this.speed = this.baseSpeed
     this.floors.setSpeed(this.speed)
     this.score = 0;
+    Resources.sounds.music.play(.5)
+    Resources.sounds.music.loop = true
   }
 
   update(engine: Engine, delta: number): void {
@@ -43,11 +46,16 @@ class Level extends Scene {
       this.player?.setSpeed(this.speed);
     }
     if(this.player?.isOffScreen){
-      engine.goToScene('end');
+      this.gameover(engine)
     }
     if(engine.input.keyboard.wasPressed(Keys.D)){
-      engine.goToScene('end');
+      this.gameover(engine)
     }
+  }
+
+  gameover(engine: ex.Engine){
+    engine.goToScene('end');
+    Resources.sounds.music.stop()
   }
 }
 

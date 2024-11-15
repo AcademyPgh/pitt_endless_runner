@@ -3,8 +3,10 @@ import * as ex from 'excalibur';
 import { mainLevel } from './level';
 class EndScene extends ex.Scene {
 
- private text = new ex.Text({text: 'Game Over!', scale: ex.vec(3, 3)})
+ private gameOverText = new ex.Text({text: 'Game Over!', scale: ex.vec(3, 3)})
  private scoreActor = new ex.Actor({pos: ex.vec(250,200), width: 100, height: 50});
+ private replayText = new ex.Text({text: 'Play Again', scale: ex.vec(2, 2)})
+
   onInitialize(engine: ex.Engine) {
     this.drawGameOver();
     this.drawReplayButton(engine)
@@ -13,14 +15,17 @@ class EndScene extends ex.Scene {
 
   drawGameOver() {
     const textActor = new ex.Actor({pos: ex.vec(250,100)});
-    textActor.graphics.use(this.text);
+    textActor.graphics.use(this.gameOverText);
     this.add(textActor);
   }
 
   drawReplayButton(engine: ex.Engine){
     const buttonActor = new ex.Actor({pos: ex.vec(250,150), width: 100, height: 50, color: ex.Color.Green});
+    const replayActor = new ex.Actor({pos: ex.vec(2,0), width: 80, height: 30, color: ex.Color.White});
+    replayActor.graphics.use(this.replayText)
     buttonActor.on('pointerdown', () => this.resetGame(engine))
     this.add(buttonActor)
+    buttonActor.addChild(replayActor)
   }
 
   drawFinalScore(){

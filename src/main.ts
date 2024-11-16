@@ -11,6 +11,7 @@ class Game extends Engine {
         resolution: {width: 500, height: 270},
         pixelArt: true,
         pixelRatio: 2,
+        antialiasing: true,
         scenes: {
           start: startScene,
           level: mainLevel,

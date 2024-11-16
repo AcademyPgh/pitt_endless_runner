@@ -15,6 +15,8 @@ import sound from "./sounds/jump.mp3"
 
 //foregrounds
 import fore1 from "./images/floorbuilding1.png"
+import fore2 from "./images/floorbuilding2.png"
+const foregrounds = [fore1, fore2]
 
 
 //character sheets here
@@ -26,7 +28,9 @@ const playableCharacters = [playerBlack, playerRed, playerBlue]
 export const Resources = {
   sheets: 
     playableCharacters.map(sheet => {return new ImageSource(sheet)}),
-  foregrounds: [new ImageSource(fore1)],
+  foregrounds: 
+    foregrounds.map(fore => {return new ImageSource(fore)}),
+    
   background: {
     cathedral: new ImageSource(cathedralSkyline),
     city: new ImageSource(citySkyline),

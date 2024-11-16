@@ -8,8 +8,14 @@ import cloudscape2 from "./images/Cloudscape2.png";
 import cloudscape3 from "./images/Cloudscape3.png";
 import cloudscape4 from "./images/Cloudscape4.png";
 import noCathedralSkyline from "./images/noCatherdralSkyline.png";
+
+//sfx
 import music from "./sounds/music.mp3"
 import sound from "./sounds/jump.mp3"
+
+//foregrounds
+import fore1 from "./images/floorbuilding1.png"
+
 
 //character sheets here
 import playerBlack from "./images/playerSheet.png";
@@ -20,6 +26,7 @@ const playableCharacters = [playerBlack, playerRed, playerBlue]
 export const Resources = {
   sheets: 
     playableCharacters.map(sheet => {return new ImageSource(sheet)}),
+  foregrounds: [new ImageSource(fore1)],
   background: {
     cathedral: new ImageSource(cathedralSkyline),
     city: new ImageSource(citySkyline),
@@ -32,7 +39,8 @@ export const Resources = {
   sounds: {
     music: new Sound(music),
     jump: new Sound(sound)
-  }
+  },
+
 } as const;
 
 export const playerSheets = Resources.sheets.map(source => {

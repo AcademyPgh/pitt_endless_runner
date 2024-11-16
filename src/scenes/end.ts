@@ -14,13 +14,13 @@ class EndScene extends ex.Scene {
   }
 
   drawGameOver() {
-    const textActor = new ex.Actor({pos: ex.vec(250,100)});
+    const textActor = new ex.Actor({pos: ex.vec(250,50)});
     textActor.graphics.use(this.gameOverText);
     this.add(textActor);
   }
 
   drawReplayButton(engine: ex.Engine){
-    const buttonActor = new ex.Actor({pos: ex.vec(250,150), width: 100, height: 50, color: ex.Color.Green});
+    const buttonActor = new ex.Actor({pos: ex.vec(250,100), width: 100, height: 50, color: ex.Color.Green});
     const replayActor = new ex.Actor({pos: ex.vec(2,0), width: 80, height: 30, color: ex.Color.White});
     replayActor.graphics.use(this.replayText)
     buttonActor.on('pointerdown', () => this.resetGame(engine))

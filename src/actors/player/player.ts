@@ -1,5 +1,6 @@
 import { Actor, vec, Animation, CollisionType, Collider, CollisionContact, Side, Shape, Engine, Keys, SpriteSheet } from "excalibur";
 import { Resources } from "../../resources";
+import { startHeight } from "../level/floor";
 
 const RUN = "RUN";
 const JUMP = "JUMP";
@@ -13,11 +14,8 @@ const enum States {
   land = "LAND"
 }
 
-
-
-const jumpMax = 250
-const jumpStrength = 200
-const gravityStrength = 600;
+const jumpMax = 200
+const jumpStrength = 300
 const playerXtarget = 50;
 const recoveryVelocity = 10;
 
@@ -27,7 +25,7 @@ export class Player extends Actor {
     super({
       z: 100,
       collisionType: CollisionType.Active,
-      collider: Shape.Box(39, 34)
+      collider: Shape.Box(25, 34)
     });
     this.resetPlayer()
     this.animations = this.buildAnimationDictionary(playerSpriteSheet)
@@ -45,7 +43,7 @@ export class Player extends Actor {
   }
 
   resetPlayer(){
-    this.pos = vec(playerXtarget, 200)
+    this.pos = vec(playerXtarget, startHeight + 20)
     this.vel = vec(0, 10)
   }
 
@@ -56,7 +54,6 @@ export class Player extends Actor {
   }
 
   onPreUpdate(engine: Engine, delta: number): void {
-    this.vel.y += gravityStrength * (delta/1000);
     if (this.state === States.jump && this.vel.y >= 0) {
       this.state = States.fall;
       this.graphics.use(this.animations[this.state]);
@@ -91,7 +88,7 @@ export class Player extends Actor {
   }
 
   setSpeed(speed: number): void {
-    const multiplier = speed / 100;
+    const multiplier = speed / 200;
     this.animations[States.run].speed = multiplier;
   }
 

@@ -29,7 +29,8 @@ class EndScene extends ex.Scene {
   }
 
   drawFinalScore(){
-    const text = new ex.Text({text: "Your Score: " + mainLevel.score.toString(), scale: ex.vec(1, 1)})
+    const score = Math.round(mainLevel.floors.distance)
+    const text = new ex.Text({text: "Your Score: " + score.toString(), scale: ex.vec(1, 1)})
     this.scoreActor.graphics.use(text)
   }
 

@@ -2,6 +2,7 @@ import { Actor, Color, CollisionType, Shape,  Engine, ImageSource } from 'excali
 import { Queue } from './Queue';
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
+import { Crate } from './crate';
 
 const makeFloor = (x: number, floorHeight: number, image: ImageSource, width: number) => {
   const scale = width/image.width;
@@ -14,7 +15,6 @@ const makeFloor = (x: number, floorHeight: number, image: ImageSource, width: nu
     color: Color.Rose,
     collisionType: CollisionType.Fixed,
     collider: Shape.Box(width, height),
-    z: 50,
   });
   floor.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
 
@@ -22,10 +22,19 @@ const makeFloor = (x: number, floorHeight: number, image: ImageSource, width: nu
 }
 
 const interiorSize = 80;
-const interiorChance = .4;
+const interiorChance = .25;
+const minPlatformWidth = 400
+const maxPlatformWidth = 1000;
+const minPlatformHeight = 100
+const maxPlatformHeight = 200;
+const minGap = 100;
+const maxGap = 200;
+const maxCrates = 2;
 
+export const startHeight = 100;
 class Floors extends Actor {
   private floors: Queue<Actor> = new Queue();
+  public distance = 0;
 
   constructor() {
     super({
@@ -33,11 +42,9 @@ class Floors extends Actor {
     });
   }
 
-  addFloor(width: number, floorHeight: number, image: ImageSource, gap: number, interior: boolean = false): void {
+  addFloor(image: ImageSource, width: number, floorHeight: number, gap: number, interior: boolean = false): void {
     // floors should always be added to the right of the last floor
     // they should always go from their given height to the bottom of the screen
-    
-
     const lastFloor = this.floors.last();
     const x = lastFloor ? lastFloor.pos.x + (lastFloor.width / 2) + (width / 2) + gap : 0 + (width / 2);
     const floor = makeFloor(x, floorHeight, image, width);
@@ -49,14 +56,25 @@ class Floors extends Actor {
       floor.addChild(ceiling)
     }
 
+    let crateCount = randomBetween(-2, maxCrates)
+    crateCount < 0 ? crateCount = 0 : crateCount = crateCount;
+    for(let i = 0; i < crateCount; i++)
+    {
+      let crateX = floor.width/(crateCount + 1) * (i + 1) 
+      crateX -= floor.width/2
+      const crate = new Crate(crateX, -floor.height/2)
+      floor.addChild(crate)
+    }
+    
+
     this.floors.push(floor);
     
   }
 
   onInitialize(): void {
-    this.addFloor(400, 180, Resources.foregrounds[0], 50);
-    this.addFloor(300, 200, Resources.foregrounds[0], 50);
-    this.addFloor(300, 170, Resources.foregrounds[0], 50);
+    this.addFloor(Resources.foregrounds[0], 700, startHeight,  50, true);
+    this.addFloor(Resources.foregrounds[0], 500, 200, 50);
+    this.addFloor(Resources.foregrounds[0], 300, 200,  50);
   }
 
   setSpeed(speed: number): void {
@@ -70,17 +88,23 @@ class Floors extends Actor {
       floor.kill();
       this.makeRandomFloor();
     }
+    this.distance = Math.abs(this.pos.x)
   }
 
   makeRandomFloor(): void {
-    const width = Math.random() * 100 + 300;
-    const height = Math.random() * 100 + 100;
-    const gap = Math.random() * 50 + 50;
     const interior = Math.random() < interiorChance;
     const index = Math.floor(Math.random() * Resources.foregrounds.length);
     const foreground = Resources.foregrounds[index]
-    this.addFloor(width, height, foreground, gap, interior);
+    this.addFloor(foreground, randomBetween(minPlatformWidth, maxPlatformWidth), 
+    randomBetween(minPlatformHeight, maxPlatformHeight), 
+    randomBetween(minGap, maxGap), interior);
   }
+
+  
+}
+
+export function randomBetween(min: number, max: number) : number{
+  return Math.random() * (max-min) + min
 }
 
 export { Floors };

@@ -18,6 +18,10 @@ import fore1 from "./images/floorbuilding1.png"
 import fore2 from "./images/floorbuilding2.png"
 const foregrounds = [fore1, fore2]
 
+//small obstacles
+import crate from "./images/crate.png"
+const crates = [crate]
+
 
 //character sheets here
 import playerBlack from "./images/playerSheet.png";
@@ -28,6 +32,8 @@ const playableCharacters = [playerBlack, playerRed, playerBlue]
 export const Resources = {
   sheets: 
     playableCharacters.map(sheet => {return new ImageSource(sheet)}),
+  crates:
+    crates.map(box => {return new ImageSource(box)}),
   foregrounds: 
     foregrounds.map(fore => {return new ImageSource(fore)}),
     

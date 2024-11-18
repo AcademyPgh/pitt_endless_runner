@@ -1,10 +1,12 @@
-import { Engine, Actor } from "excalibur";
+
 import { startScene } from "./scenes/start";
 import { mainLevel } from "./scenes/level";
 import { endScene } from "./scenes/end";
 import { loader } from "./resources";
+import * as ex from 'excalibur';
 
-class Game extends Engine {
+const gravity = 900
+class Game extends ex.Engine {
     constructor() {
       super({
         viewport: {width: 1000, height: 540},
@@ -12,6 +14,10 @@ class Game extends Engine {
         pixelArt: true,
         pixelRatio: 2,
         antialiasing: true,
+        physics: {
+          solver: ex.SolverStrategy.Arcade,
+          gravity: ex.vec(0, gravity)
+        },
         scenes: {
           start: startScene,
           level: mainLevel,

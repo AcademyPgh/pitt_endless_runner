@@ -29,6 +29,9 @@ import playerRed from "./images/playerSheetRed.png";
 import playerBlue from "./images/playerSheetBlue.png";
 const playableCharacters = [playerBlack, playerRed, playerBlue]
 
+//UI assets
+import characterFrame from "./images/charframe.png";
+
 export const Resources = {
   sheets: 
     playableCharacters.map(sheet => {return new ImageSource(sheet)}),
@@ -50,6 +53,9 @@ export const Resources = {
     music: new Sound(music),
     jump: new Sound(sound)
   },
+  ui:{
+    portraitFrame: new ImageSource(characterFrame)
+  } 
 
 } as const;
 

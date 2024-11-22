@@ -3,21 +3,32 @@ import * as ex from 'excalibur';
 import { mainLevel } from './level';
 import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
+import { InputField } from '../actors/ui/inputfield';
+import { profanity } from '@2toad/profanity';
+
+const maxNameLength = 7
 class EndScene extends ex.Scene {
 
  private scoreActor = new ex.Actor({pos: ex.vec(250,200), width: 100, height: 50});
+ private textField: InputField
+ private submittedScore: boolean
 
   onInitialize(engine: ex.Engine) {
     drawText({scene: this, text: 'Game Over!', pos: ex.vec(engine.drawWidth/2,50), scale: 3})
-    this.drawReplayButton(engine)
     this.add(this.scoreActor)
+    this.drawNameField(engine)
   }
 
-  drawReplayButton(engine: ex.Engine){
-    const buttonActor = new ex.Actor({pos: ex.vec(250,100), width: 100, height: 50, color: ex.Color.Green});
-    drawText({actor: buttonActor, text: 'Play Again', scale: 1.5})
-    buttonActor.on('pointerdown', () => this.resetGame(engine))
-    this.add(buttonActor)
+  onActivate() {
+    this.drawFinalScore(this.getFinalScore())
+    this.textField.clear()
+    this.submittedScore = false
+  }
+
+  drawNameField(engine: ex.Engine){
+    drawText({scene: this, text: 'Enter your name, then press space to submit your score!', scale: 1.5, pos: ex.vec(engine.drawWidth/2,100)})
+    this.textField = new InputField(ex.vec(engine.drawWidth/2,150), maxNameLength)
+    this.add(this.textField)
   }
 
   drawFinalScore(score: number){
@@ -25,19 +36,32 @@ class EndScene extends ex.Scene {
     this.scoreActor.graphics.use(text)
   }
 
-  resetGame(engine: ex.Engine){
-    engine.goToScene('select')
+  getFinalScore() : number{
+    return Math.round(mainLevel.floors.distance)
   }
 
-  onActivate() {
-    const score = Math.round(mainLevel.floors.distance)
-    this.drawFinalScore(score)
-    this.tradeScores(score)
+  update(engine: ex.Engine, delta: number): void {
+    
+    if(!this.submittedScore && engine.input.keyboard.wasPressed(ex.Keys.Space))
+    {
+      let name = this.textField.contents
+      if(name.length < 1){
+        //TODO: length warning
+      }
+      else if(profanity.exists(name)){
+        //TODO: profanity warning 
+      }
+      else{
+        this.sendScore(this.getFinalScore(), this.textField.contents)
+      }
+      
+    }
   }
 
-  async tradeScores(score: number){
-    await scoreProvider.submitScore(score)
-    scoreProvider.getHighScores()
+  async sendScore(score: number, name: string){
+    this.submittedScore = true
+    await scoreProvider.submitScore(score, name)
+    this.engine.goToScene('attract')
   }
 }
 

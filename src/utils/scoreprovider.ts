@@ -11,9 +11,9 @@ class ScoreProvider {
         this.startTime = Date.now()
     }
 
-    async submitScore(score: number){
+    async submitScore(score: number, name: string){
         let gameEnd = Date.now()
-        let request: ScoreRequest = {nonce: this.nonce, name: "test", score, gameStart: this.startTime, gameEnd}
+        let request: ScoreRequest = {nonce: this.nonce, name, score, gameStart: this.startTime, gameEnd}
         await fetch(url, {method: "POST", body: JSON.stringify(request)})
     }
 

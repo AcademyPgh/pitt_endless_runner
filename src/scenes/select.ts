@@ -7,13 +7,12 @@ class StartScene extends ex.Scene {
 
 public playerSkin: ex.SpriteSheet;
   onInitialize(engine: ex.Engine) {
-    drawText({scene: this, text: 'GAME NAME HERE', pos: ex.vec(engine.drawWidth/2, 50), color: ex.Color.White, scale: 3})
-    drawText({scene: this, text: 'Choose your Character', pos: ex.vec(engine.drawWidth/2, 100), color: ex.Color.White, scale: 2})
+    drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 3})
     this.drawSelectOptions(playerSheets, engine)
   }
 
   drawSelectOptions(skins: ex.SpriteSheet[], engine: ex.Engine){
-    const height = 180;
+    const height = 150;
     const deadZone = 200
     const xOffset = (engine.drawWidth - deadZone)/skins.length
     for(let i = 0; i < skins.length; i++){

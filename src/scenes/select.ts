@@ -1,7 +1,8 @@
 
 import * as ex from 'excalibur';
 import { playerSheets, Resources } from '../resources';
-import { drawText } from '../tools';
+import { drawText } from '../utils/helpers';
+import { scoreProvider } from '../utils/scoreprovider';
 class StartScene extends ex.Scene {
 
 public playerSkin: ex.SpriteSheet;
@@ -57,8 +58,8 @@ public playerSkin: ex.SpriteSheet;
   beginGameWithSkin(skin: ex.SpriteSheet, engine: ex.Engine){
     this.playerSkin = skin
     engine.goToScene('level')
+    scoreProvider.openSession()
   }
 }
 
-const startScene = new StartScene();
-export { startScene };
+export const select = new StartScene();

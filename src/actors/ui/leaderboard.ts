@@ -1,41 +1,46 @@
 import * as ex from 'excalibur';
+import { LeaderboardEntry } from '../../utils/scoreprovider';
+import { drawText } from '../../utils/helpers';
 
-const textScale = ex.vec(.5,.5)
-class Leaderboard extends ex.Actor {
-    private entryOffset = 10;
-    constructor(){
-        super()
+const textScale = 2
+export class Leaderboard extends ex.Actor {
+    private headerSpacing = 1.5;
+    private headerScale = 2.5;
+    private entryOffset = 30;
+    private boardWidth: number
+    constructor(data: LeaderboardEntry[], pos: ex.Vector, width: number){
+        super({pos})
+        this.boardWidth = width
+        this.addEntries(data)
     }
 
-    addEntries(data: LeaderboardData[]){
+    addEntries(data: LeaderboardEntry[]){
+        data.sort(entry => entry.score)
+        let positions = this.getElementPositions(3)
+        let header = ["Rank", "Name", "Score"]
+        this.addEntry(header, positions, 0, this.headerScale)
         for(let i = 0; i < data.length; i++){
-            let entry = this.addEntry(data[i])
-            this.addChild(entry)
-            entry.pos = ex.vec(0, this.entryOffset * i)
+            let entryText = [(i+1).toString(), data[i].name, data[i].score.toString()]
+            this.addEntry(entryText, positions, i + this.headerSpacing, textScale);
         }
     }
 
-    addEntry(data: LeaderboardData) : ex.Actor
-    {
-        let entry = new LeaderboardEntry
-        entry.addTextToEntry(data.place.toString(), 0)
-        entry.addTextToEntry(data.name, 5)
-        entry.addTextToEntry(data.score.toString(), 15)
-        return entry
+    private addEntry(entryText: string[], positions: ex.Vector[], height: number, scale: number) {
+        let entry = new ex.Actor
+        for(let i = 0; i < entryText.length; i++){
+            drawText({actor: entry, text: entryText[i], pos: positions[i], scale})
+        }
+        this.addChild(entry);
+        entry.pos = ex.vec(0, this.entryOffset * height);
     }
-}
 
-class LeaderboardData{
-    public place: number;
-    public name: string;
-    public score: number;
-}
-
-class LeaderboardEntry extends ex.Actor{
-    addTextToEntry(contents: string, offset: number){
-        let text = new ex.Text({text: contents, scale: textScale})
-        let actor = new ex.Actor({pos: ex.vec(offset, 0)})
-        actor.graphics.use(text)
-        this.addChild(actor)
+    getElementPositions(count: number) : ex.Vector[]{
+        let positions: ex.Vector[] = []
+        let startX = -this.boardWidth/2
+        let offset = this.boardWidth/count
+        for(let i = 0; i < count; i++){
+            positions.push(ex.vec(startX + i * offset, 0))
+        }
+        return positions
     }
 }

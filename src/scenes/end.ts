@@ -1,7 +1,8 @@
 
 import * as ex from 'excalibur';
 import { mainLevel } from './level';
-import { drawText } from '../tools';
+import { drawText } from '../utils/helpers';
+import { scoreProvider } from '../utils/scoreprovider';
 class EndScene extends ex.Scene {
 
  private scoreActor = new ex.Actor({pos: ex.vec(250,200), width: 100, height: 50});
@@ -19,18 +20,24 @@ class EndScene extends ex.Scene {
     this.add(buttonActor)
   }
 
-  drawFinalScore(){
-    const score = Math.round(mainLevel.floors.distance)
+  drawFinalScore(score: number){
     const text = new ex.Text({text: "Your Score: " + score.toString(), scale: ex.vec(1, 1)})
     this.scoreActor.graphics.use(text)
   }
 
   resetGame(engine: ex.Engine){
-    engine.goToScene('start')
+    engine.goToScene('select')
   }
 
   onActivate() {
-    this.drawFinalScore()
+    const score = Math.round(mainLevel.floors.distance)
+    this.drawFinalScore(score)
+    this.tradeScores(score)
+  }
+
+  async tradeScores(score: number){
+    await scoreProvider.submitScore(score)
+    scoreProvider.getHighScores()
   }
 }
 

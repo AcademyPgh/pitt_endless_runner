@@ -3,23 +3,8 @@ import { Queue } from './Queue';
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Crate } from './crate';
-
-const makeFloor = (x: number, floorHeight: number, image: ImageSource, width: number) => {
-  const scale = width/image.width;
-  const height = image.height * scale
-  const floor = new Actor({
-    x,
-    y: floorHeight + height/2,
-    width,
-    height,
-    color: Color.Rose,
-    collisionType: CollisionType.Fixed,
-    collider: Shape.Box(width, height),
-  });
-  floor.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
-
-  return floor;
-}
+import { mainLevel } from '../../scenes/level';
+import { randomBetween } from '../../utils/helpers';
 
 const interiorSize = 80;
 const interiorChance = .25;
@@ -32,6 +17,30 @@ const maxGap = 200;
 const maxCrates = 2;
 
 export const startHeight = 100;
+
+class Floor extends Actor {
+  constructor(x: number, floorHeight: number, image: ImageSource, width: number){
+    const scale = width/image.width;
+    const height = image.height * scale
+    super({
+    x,
+    y: floorHeight + height/2,
+    width,
+    height,
+    color: Color.Rose,
+    collisionType: CollisionType.Fixed,
+    collider: Shape.Box(width, height),
+    });
+    this.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
+  }
+
+  onCollisionStart(self: ex.Collider, other: ex.Collider, side: ex.Side, contact: ex.CollisionContact): void {
+    if (side === ex.Side.Left && other.owner == mainLevel.player) {
+      mainLevel.speed = 0
+    }
+  }
+}
+
 class Floors extends Actor {
   private floors: Queue<Actor> = new Queue();
   public distance = 0;
@@ -47,15 +56,14 @@ class Floors extends Actor {
     // they should always go from their given height to the bottom of the screen
     const lastFloor = this.floors.last();
     const x = lastFloor ? lastFloor.pos.x + (lastFloor.width / 2) + (width / 2) + gap : 0 + (width / 2);
-    const floor = makeFloor(x, floorHeight, image, width);
+    const floor = new Floor(x, floorHeight, image, width);
     this.addChild(floor);
     if(interior)
     {
-      const ceiling = makeFloor(0, floorHeight, image, width)
+      const ceiling = new Floor(0, floorHeight, image, width)
       ceiling.pos.y = -(interiorSize + ceiling.height)
       floor.addChild(ceiling)
     }
-
     let crateCount = randomBetween(-2, maxCrates)
     crateCount < 0 ? crateCount = 0 : crateCount = crateCount;
     for(let i = 0; i < crateCount; i++)
@@ -103,8 +111,6 @@ class Floors extends Actor {
   
 }
 
-export function randomBetween(min: number, max: number) : number{
-  return Math.random() * (max-min) + min
-}
+
 
 export { Floors };

@@ -2,13 +2,13 @@ import { Engine, Scene, Keys } from 'excalibur';
 import { Player } from '../actors/player/player';
 import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
-import { startScene } from './start';
+import { select } from './select';
 import { Resources } from '../resources';
 
 class Level extends Scene {
-  private baseSpeed = 100;
+  private baseSpeed = 150;
   public floors: Floors;
-  public speed: number = 100;
+  public speed: number;
   private speedIncrement = .3;
   public player?: Player;
 
@@ -16,7 +16,7 @@ class Level extends Scene {
     this.clear()
     var bg = new WorldBackground;
     this.add(bg);
-    this.player = new Player(startScene.playerSkin);
+    this.player = new Player(select.playerSkin);
     this.add(this.player);
     
     this.floors = new Floors()
@@ -29,7 +29,7 @@ class Level extends Scene {
 
   update(engine: Engine, delta: number): void {
     super.update(engine, delta);
-      this.speed += this.speedIncrement;
+      if(this.speed > 0) this.speed += this.speedIncrement;
       this.floors.setSpeed(this.speed);
       this.player?.setSpeed(this.speed);
     if(this.player?.isOffScreen){

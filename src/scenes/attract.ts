@@ -24,7 +24,7 @@ class Attract extends ex.Scene{
     async loadLeaderboard(){
         let scores = await scoreProvider.getHighScores()
         let pos = ex.vec(this.engine.drawWidth/2, 30)
-        let leaderboard = new Leaderboard(scores, pos, this.engine.drawWidth/1.5)
+        let leaderboard = new Leaderboard(scores, pos, this.engine.drawWidth/1.2)
         this.add(leaderboard)
         this.activeLeaderboard = leaderboard
     }

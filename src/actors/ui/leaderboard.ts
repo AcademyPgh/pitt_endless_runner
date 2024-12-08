@@ -7,6 +7,7 @@ const headerSpacing = 2.5;
 const headerScale = 2.5;
 const entryOffset = 30;
 const scrollSpeed = 20;
+const offsets = [0, 140, 300];
 
 export class Leaderboard extends ex.Actor {
     
@@ -59,10 +60,9 @@ export class Leaderboard extends ex.Actor {
 
     getElementPositions(count: number) : ex.Vector[]{
         let positions: ex.Vector[] = []
-        let startX = -this.boardWidth/3
-        let offset = this.boardWidth/count
+        let startX = -this.boardWidth/2 + 50
         for(let i = 0; i < count; i++){
-            positions.push(ex.vec(startX + i * offset, 0))
+            positions.push(ex.vec(startX + offsets[i], 0))
         }
         return positions
     }

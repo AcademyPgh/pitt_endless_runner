@@ -1,7 +1,8 @@
 import * as ex from 'excalibur';
+import { mainFont } from '../../utils/font';
 export class InputField extends ex.Actor{
     public contents: string
-    private textDisplay = new ex.Text({text: ""})
+    private textDisplay = new ex.Text({text: "", font: mainFont})
     private maxLength: number
     constructor(pos: ex.Vector, maxLength: number){
         super({pos})

@@ -26,7 +26,7 @@ export class Crate extends ex.Actor
         this.graphics.use(new ex.Sprite({image: Resources.crates[0], destSize: {height: crateHeight, width: crateWidth }}))
     }
 
-    onCollisionStart(self: ex.Collider, other: ex.Collider, side: ex.Side, contact: ex.CollisionContact): void {
+    onCollisionStart(_self: ex.Collider, other: ex.Collider, _side: ex.Side, _contact: ex.CollisionContact): void {
         if(other.owner != mainLevel.player) return
         mainLevel.speed *= speedPenalty;
         this.vel = ex.vec(mainLevel.speed * 1.5, -kickVelocity)

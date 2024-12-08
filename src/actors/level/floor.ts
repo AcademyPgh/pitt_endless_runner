@@ -34,7 +34,7 @@ class Floor extends Actor {
     this.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
   }
 
-  onCollisionStart(self: ex.Collider, other: ex.Collider, side: ex.Side, contact: ex.CollisionContact): void {
+  onCollisionStart(_self: ex.Collider, other: ex.Collider, side: ex.Side, _contact: ex.CollisionContact): void {
     if (side === ex.Side.Left && other.owner == mainLevel.player) {
       mainLevel.speed = 0
     }

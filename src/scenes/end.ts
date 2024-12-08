@@ -40,7 +40,7 @@ class EndScene extends ex.Scene {
     return Math.round(mainLevel.floors.distance)
   }
 
-  update(engine: ex.Engine, delta: number): void {
+  update(engine: ex.Engine, _delta: number): void {
     
     if(!this.submittedScore && engine.input.keyboard.wasPressed(ex.Keys.Space))
     {

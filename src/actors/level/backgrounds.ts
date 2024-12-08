@@ -49,7 +49,7 @@ class LevelBackground extends Actor {
     return backgrounds.map((background) => new BackgroundPane(background, width, height));
   }
 
-  onInitialize(engine: Engine): void {
+  onInitialize(_engine: Engine): void {
     for(let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].pos.x = i * this.width;
       this.backgrounds[i].vel = this.speed;
@@ -57,7 +57,7 @@ class LevelBackground extends Actor {
     }
   }
 
-  onPostUpdate(engine: Engine, delta: number): void {
+  onPostUpdate(_engine: Engine, _delta: number): void {
     for (const background of this.backgrounds) {
       if(background.pos.x <= -this.width) {
         background.pos.x = this.width * (this.backgrounds.length - 1);

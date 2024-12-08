@@ -53,7 +53,7 @@ export class Player extends Actor {
     this.graphics.use(this.animations[this.state]);
   }
 
-  onPreUpdate(engine: Engine, delta: number): void {
+  onPreUpdate(_engine: Engine, _delta: number): void {
     if (this.state === States.jump && this.vel.y >= 0) {
       this.state = States.fall;
       this.graphics.use(this.animations[this.state]);
@@ -92,7 +92,7 @@ export class Player extends Actor {
     this.animations[States.run].speed = multiplier;
   }
 
-  onCollisionStart(self: Collider, other: Collider, side: Side, contact: CollisionContact): void {
+  onCollisionStart(_self: Collider, _other: Collider, side: Side, _contact: CollisionContact): void {
     if (side === Side.Bottom) {
       this.playerRun()
     }
@@ -107,7 +107,7 @@ export class Player extends Actor {
       this.vel.y = 0;
   }
 
-  onCollisionEnd(self: Collider, other: Collider, side: Side, lastContact: CollisionContact): void {
+  onCollisionEnd(_self: Collider, _other: Collider, side: Side, _lastContact: CollisionContact): void {
     if (this.state === States.run && side === Side.Bottom) {
       this.state = States.fall;
       this.graphics.use(this.animations[this.state]);

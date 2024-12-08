@@ -68,7 +68,7 @@ export class Leaderboard extends ex.Actor {
         return positions
     }
 
-    update(engine: ex.Engine, delta: number): void {
+    update(_engine: ex.Engine, _delta: number): void {
         if(this.scroller.pos.y < -this.totalHeight || this.scroller.pos.y > 0) 
             this.scroller.vel.y *= -1
     }

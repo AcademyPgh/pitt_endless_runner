@@ -36,7 +36,6 @@ export class Leaderboard extends ex.Actor {
     }
 
     addEntries(data: LeaderboardEntry[], overlay: ex.Actor){
-        data.sort(entry => entry.score)
         let positions = this.getElementPositions(3)
         let headerText = ["Rank", "Name", "Score"]
         let header = this.addEntry(headerText, positions, 1, headerScale, 5)

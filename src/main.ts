@@ -14,7 +14,7 @@ class Game extends ex.Engine {
         resolution: {width: 500, height: 270},
         pixelArt: true,
         pixelRatio: 2,
-        antialiasing: true,
+        antialiasing: false,
         physics: {
           solver: ex.SolverStrategy.Arcade,
           gravity: ex.vec(0, gravity)

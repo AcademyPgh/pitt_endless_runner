@@ -7,7 +7,7 @@ class StartScene extends ex.Scene {
 
 public playerSkin: ex.SpriteSheet;
   onInitialize(engine: ex.Engine) {
-    drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 3})
+    drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
     this.drawSelectOptions(playerSheets, engine)
   }
 

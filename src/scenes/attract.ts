@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 import { scoreProvider } from '../utils/scoreprovider';
 import { Leaderboard } from '../actors/ui/leaderboard';
 import { drawText } from '../utils/helpers';
+import { mainFont } from '../utils/font';
 
 const overlayHeight = 50
 class Attract extends ex.Scene{
@@ -17,7 +18,7 @@ class Attract extends ex.Scene{
       drawLowerOverlay(engine: ex.Engine){
         let overlayLower = new ex.Actor({ pos: ex.vec(engine.drawWidth/2, engine.drawHeight - overlayHeight/2), width: engine.drawWidth, height: overlayHeight, color: ex.Color.Black, z: 5 });
         this.add(overlayLower);
-        let text = drawText({ text: "Press Space to Play", scale: 3, actor: overlayLower, color: ex.Color.White });
+        let text = drawText({ text: "Press Space to Play", scale: 2, actor: overlayLower, color: ex.Color.White });
         text.z = 10;
     }
     

@@ -1,11 +1,12 @@
 import * as ex from 'excalibur';
+import { mainFont } from './font';
 
 export function randomBetween(min: number, max: number) : number{
     return Math.random() * (max-min) + min
   }
 export function drawText(args: TextArgs) : ex.Actor{
     let scale = args.scale == undefined ? 1 : args.scale
-    let text = new ex.Text({text: args.text, scale: ex.vec(scale, scale), color: args.color, font: args.font})
+    let text = new ex.Text({text: args.text, scale: ex.vec(scale, scale), color: args.color, font: mainFont, maxWidth: 480})
     const textActor = new ex.Actor({pos: args.pos});
     textActor.graphics.use(text);
     if(args.scene) args.scene.add(textActor)

@@ -5,6 +5,7 @@ import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
 import { InputField } from '../actors/ui/inputfield';
 import { profanity } from '@2toad/profanity';
+import { mainFont } from '../utils/font';
 
 const maxNameLength = 7
 class EndScene extends ex.Scene {
@@ -26,13 +27,13 @@ class EndScene extends ex.Scene {
   }
 
   drawNameField(engine: ex.Engine){
-    drawText({scene: this, text: 'Enter your name, then press space to submit your score!', scale: 1.5, pos: ex.vec(engine.drawWidth/2,100)})
+    drawText({scene: this, text: 'Enter your name, then press space to submit your score!', scale: 1, pos: ex.vec(engine.drawWidth/2,100)})
     this.textField = new InputField(ex.vec(engine.drawWidth/2,150), maxNameLength)
     this.add(this.textField)
   }
 
   drawFinalScore(score: number){
-    const text = new ex.Text({text: "Your Score: " + score.toString(), scale: ex.vec(1, 1)})
+    const text = new ex.Text({text: "Your Score: " + score.toString(), scale: ex.vec(1, 1), font: mainFont})
     this.scoreActor.graphics.use(text)
   }
 

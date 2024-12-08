@@ -24,7 +24,7 @@ export class Leaderboard extends ex.Actor {
     private drawUpperOverlay(width: number) {
         let overlayUpper = new ex.Actor({ width: width * 2, height: 100, color: ex.Color.Black, z: 5 });
         this.addChild(overlayUpper);
-        let text = drawText({ text: "HIGH SCORES", scale: 3, actor: overlayUpper, color: ex.Color.White });
+        let text = drawText({ text: "HIGH SCORES", scale: 2, actor: overlayUpper, color: ex.Color.White });
         text.z = 10;
         return overlayUpper;
     }

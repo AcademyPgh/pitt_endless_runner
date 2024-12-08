@@ -2,7 +2,6 @@ import * as ex from 'excalibur';
 import { scoreProvider } from '../utils/scoreprovider';
 import { Leaderboard } from '../actors/ui/leaderboard';
 import { drawText } from '../utils/helpers';
-import { mainFont } from '../utils/font';
 
 const overlayHeight = 50
 class Attract extends ex.Scene{

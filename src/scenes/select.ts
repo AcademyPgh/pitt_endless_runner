@@ -11,6 +11,12 @@ public playerSkin: ex.SpriteSheet;
     this.drawSelectOptions(playerSheets, engine)
   }
 
+  onActivate(_context: ex.SceneActivationContext<unknown>): void {
+    Resources.sounds.character_select.play(.5)
+    Resources.sounds.character_select.loop = true
+
+  }
+
   drawSelectOptions(skins: ex.SpriteSheet[], engine: ex.Engine){
     const height = 150;
     const deadZone = 200
@@ -56,6 +62,7 @@ public playerSkin: ex.SpriteSheet;
 
   beginGameWithSkin(skin: ex.SpriteSheet, engine: ex.Engine){
     this.playerSkin = skin
+    Resources.sounds.character_select.stop()
     engine.goToScene('level')
     scoreProvider.openSession()
   }

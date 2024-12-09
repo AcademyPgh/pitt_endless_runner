@@ -11,6 +11,7 @@ import noCathedralSkyline from "./images/noCatherdralSkyline.png";
 
 //sfx
 import music from "./sounds/music.mp3"
+import character_select_music from "./sounds/characterselect.mp3"
 import sound from "./sounds/jump.mp3"
 
 //foregrounds
@@ -52,6 +53,7 @@ export const Resources = {
   },
   sounds: {
     music: new Sound(music),
+    character_select: new Sound(character_select_music),
     jump: new Sound(sound)
   },
   ui:{

@@ -17,7 +17,7 @@ const enum States {
 const jumpMax = 200
 const jumpStrength = 350
 const playerXtarget = 50;
-const recoveryVelocity = 10;
+// const recoveryVelocity = 10;
 
 export class Player extends Actor {
   private animations: Record<States, Animation>

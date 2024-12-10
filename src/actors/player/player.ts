@@ -15,7 +15,7 @@ const enum States {
 }
 
 const jumpMax = 200
-const jumpStrength = 300
+const jumpStrength = 350
 const playerXtarget = 50;
 const recoveryVelocity = 10;
 
@@ -81,10 +81,10 @@ export class Player extends Actor {
         this.jumpTimer += delta
       }
 
-      if(this.pos.x != playerXtarget){
-        let direction = Math.sign(playerXtarget - this.pos.x)
-        this.vel.x = direction * recoveryVelocity
-      }
+      // if(this.pos.x != playerXtarget){
+      //   let direction = Math.sign(playerXtarget - this.pos.x)
+      //   this.vel.x = direction * recoveryVelocity
+      // }
   }
 
   setSpeed(speed: number): void {
@@ -95,9 +95,6 @@ export class Player extends Actor {
   onCollisionStart(_self: Collider, _other: Collider, side: Side, _contact: CollisionContact): void {
     if (side === Side.Bottom) {
       this.playerRun()
-    }
-    if (side === Side.Left || side === Side.Right) {
-      this.vel.x = 0;
     }
   }
 

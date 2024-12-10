@@ -6,10 +6,10 @@ import { Crate } from './crate';
 import { mainLevel } from '../../scenes/level';
 import { randomBetween } from '../../utils/helpers';
 
-const interiorSize = 80;
+const interiorSize = 90;
 const interiorChance = .25;
-const minPlatformWidth = 400
-const maxPlatformWidth = 1000;
+const minPlatformWidth = 600
+const maxPlatformWidth = 1400;
 const minPlatformHeight = 100
 const maxPlatformHeight = 200;
 const minGap = 100;
@@ -37,6 +37,8 @@ class Floor extends Actor {
   onCollisionStart(_self: ex.Collider, other: ex.Collider, side: ex.Side, _contact: ex.CollisionContact): void {
     if (side === ex.Side.Left && other.owner == mainLevel.player) {
       mainLevel.speed = 0
+      mainLevel.player.vel.x = 0;
+      mainLevel.player.pos.x -= 3
     }
   }
 }
@@ -81,8 +83,8 @@ class Floors extends Actor {
 
   onInitialize(): void {
     this.addFloor(Resources.foregrounds[0], 700, startHeight,  50, true);
-    this.addFloor(Resources.foregrounds[0], 500, 200, 50);
-    this.addFloor(Resources.foregrounds[0], 300, 200,  50);
+    this.addFloor(Resources.foregrounds[0], 800, 200, 50);
+    this.addFloor(Resources.foregrounds[0], 500, 200,  50);
   }
 
   setSpeed(speed: number): void {

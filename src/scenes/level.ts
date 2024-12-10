@@ -32,7 +32,7 @@ class Level extends Scene {
       if(this.speed > 0) this.speed += this.speedIncrement;
       this.floors.setSpeed(this.speed);
       this.player?.setSpeed(this.speed);
-    if(this.player?.isOffScreen){
+    if(this.player?.isOffScreen && this.player.pos.y > 0){
       this.gameover(engine)
     }
     if(engine.input.keyboard.wasPressed(Keys.D)){

@@ -1,4 +1,4 @@
-import { ImageSource, SpriteSheet, Loader, Sound } from "excalibur";
+import { ImageSource, SpriteSheet, Sound } from "excalibur";
 
 //backgrounds
 import cathedralSkyline from "./images/cathedralSkyline.png";
@@ -74,11 +74,3 @@ export const playerSheets = Resources.sheets.map(source => {
     }
 })
 })
-
-export const loader = new Loader();
-
-for (const group of Object.values(Resources)) {
-  for (const res of Object.values(group)) {
-    loader.addResource(res);
-  }
-}

@@ -2,11 +2,11 @@
 import { select } from "./scenes/select";
 import { mainLevel } from "./scenes/level";
 import { endScene } from "./scenes/end";
-import { loader } from "./resources";
 import * as ex from 'excalibur';
 import { attract } from "./scenes/attract";
+import { loader } from "./scenes/loading";
 
-const gravity = 900
+const gravity = 1200
 class Game extends ex.Engine {
     constructor() {
       super({

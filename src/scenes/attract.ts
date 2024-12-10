@@ -9,12 +9,13 @@ class Attract extends ex.Scene{
     onActivate() {
         if(this.activeLeaderboard) this.remove(this.activeLeaderboard)
         this.loadLeaderboard()
-      }
+    }
 
-      onInitialize(engine: ex.Engine): void {
-          this.drawLowerOverlay(engine)
-      }
-      drawLowerOverlay(engine: ex.Engine){
+    onInitialize(engine: ex.Engine): void {
+        this.drawLowerOverlay(engine)
+    }
+
+    drawLowerOverlay(engine: ex.Engine){
         let overlayLower = new ex.Actor({ pos: ex.vec(engine.drawWidth/2, engine.drawHeight - overlayHeight/2), width: engine.drawWidth, height: overlayHeight, color: ex.Color.Black, z: 5 });
         this.add(overlayLower);
         let text = drawText({ text: "Press Space to Play", scale: 2, actor: overlayLower, color: ex.Color.White });

@@ -4,10 +4,17 @@ import { mainLevel } from './level';
 import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
 import { InputField } from '../actors/ui/inputfield';
-import { profanity } from '@2toad/profanity';
 import { mainFont } from '../utils/font';
 
-const maxNameLength = 7
+const maxNameLength = 3
+const profanity = [
+  "ass", "baw", "bch", "bnt", "bdm", "bft", "btt", "c0k", "cnt", "crp", "dck", "dmb",
+  "dks", "fag", "fuk", "fgt", "gdi", "gdw", "h3l", "h0e", "hom", "h0m", "jck", "kfc", "kys",
+  "lma", "lls", "mth", "n00", "nig", "n00b", "p0s", "phd", "pim", "prk", "pxt",
+  "qu3", "rdm", "scm", "sht", "skn", "shk", "sh1", "sht", "twt", "wtf", "wth"
+];
+
+
 class EndScene extends ex.Scene {
 
  private scoreActor = new ex.Actor({pos: ex.vec(250,200), width: 100, height: 50});
@@ -49,7 +56,7 @@ class EndScene extends ex.Scene {
       if(name.length < 1){
         //TODO: length warning
       }
-      else if(profanity.exists(name)){
+      else if(profanity.includes(name.toLowerCase())){
         //TODO: profanity warning 
       }
       else{

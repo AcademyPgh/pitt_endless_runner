@@ -34,7 +34,7 @@ class EndScene extends ex.Scene {
   }
 
   drawNameField(engine: ex.Engine){
-    drawText({scene: this, text: 'Enter your name, then press space to submit your score!', scale: 1, pos: ex.vec(engine.drawWidth/2,100)})
+    drawText({scene: this, text: 'Enter your initials, then press space\nto submit your score!', scale: 1, pos: ex.vec(engine.drawWidth/2,100)})
     this.textField = new InputField(ex.vec(engine.drawWidth/2,150), maxNameLength)
     this.add(this.textField)
   }

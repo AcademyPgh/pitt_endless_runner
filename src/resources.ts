@@ -35,6 +35,7 @@ const playableCharacters = [playerBlack, playerRed, playerBlue]
 import characterFrame from "./images/charframe.png";
 import fontImage from "./images/font/12pt.png";
 import characterSelect from "./images/characterSelect.png";
+import gradient from "./images/gradient.png";
 
 export const Resources = {
   sheets: 
@@ -62,7 +63,8 @@ export const Resources = {
   ui:{
     portraitFrame: new ImageSource(characterFrame),
     mainFont: new ImageSource(fontImage),
-    characterSelect: new ImageSource(characterSelect)
+    characterSelect: new ImageSource(characterSelect),
+    gradient: new ImageSource(gradient)
   }
 
 } as const;

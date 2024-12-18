@@ -2,8 +2,8 @@ import * as ex from 'excalibur';
 import { mainLevel } from '../../scenes/level';
 import { Resources } from '../../resources';
 
-const crateHeight = 15;
-const crateWidth = 15;
+const crateHeight = 16;
+const crateWidth = 16;
 const kickVelocity = 300;
 const kickAngular = 1;
 const speedPenalty = .8;

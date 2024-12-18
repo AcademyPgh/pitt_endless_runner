@@ -3,6 +3,7 @@ import { ImageSource, SpriteSheet, Sound } from "excalibur";
 //backgrounds
 import cathedralSkyline from "./images/cathedralSkyline.png";
 import citySkyline from "./images/citySkyline.png";
+import cityBuildings from "./images/cityBuildings.png";
 import cloudscape1 from "./images/Cloudscape1.png";
 import cloudscape2 from "./images/Cloudscape2.png";
 import cloudscape3 from "./images/Cloudscape3.png";
@@ -44,7 +45,8 @@ export const Resources = {
     
   background: {
     cathedral: new ImageSource(cathedralSkyline),
-    city: new ImageSource(citySkyline),
+    city: new ImageSource(cityBuildings),
+    citySkyline: new ImageSource(citySkyline),
     cloudscape1: new ImageSource(cloudscape1),
     cloudscape2: new ImageSource(cloudscape2),
     cloudscape3: new ImageSource(cloudscape3),

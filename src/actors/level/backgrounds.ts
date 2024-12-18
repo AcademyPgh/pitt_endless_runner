@@ -76,7 +76,7 @@ class WorldBackground extends Actor {
       pos: vec(250, 135),
       z: 0
     });
-    this.layers = [new LevelBackground(clouds), new LevelBackground(city), new LevelBackground(cathedral)]
+    this.layers = [new LevelBackground(clouds), new LevelBackground(citySkyline), new LevelBackground(cathedral), new LevelBackground(city)];
     this.speed = bgSpeed;
   }
 
@@ -106,6 +106,7 @@ const clouds = [
 ]
 const cathedral = [Resources.background.cathedral,Resources.background.noCathedral]
 const city = [Resources.background.city]
+const citySkyline = [Resources.background.citySkyline]
 
 
 

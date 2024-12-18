@@ -5,6 +5,20 @@ import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
 import { randomBetween } from '../utils/helpers';
 
+const frameSheet = ex.SpriteSheet.fromImageSource({
+  image: Resources.ui.portraitFrame,
+  grid: {
+    rows: 1,
+    columns: 13,
+    spriteWidth: 79,
+    spriteHeight: 104,
+  },
+  spacing: {
+    originOffset: {x: 1, y: 1},
+    margin: {x: 1, y: 1}
+  }
+});
+
 class StartScene extends ex.Scene {
   private background: ex.Actor;
   private gradient: ex.Actor;
@@ -63,33 +77,60 @@ class StartScene extends ex.Scene {
 
   drawSelectButton(skin: ex.SpriteSheet, pos: ex.Vector, engine: ex.Engine)
   {
-    let width = 75
-    let height = 100
+    let width = 79
+    let height = 104
     let buttonActor = new ex.Actor({
         pos,
         width,
         height,
         color: ex.Color.Transparent
-    })
-    buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine))
+    });
+    buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine));
     buttonActor.on('pointerenter', () => {
       buttonActor.color = new ex.Color(255, 255, 255, 0.25);
+      buttonActor.children.forEach(child => {
+        if (child instanceof ex.Actor) {
+          child.graphics.use('active');
+        }
+      });
     });
-    buttonActor.on('pointerleave', () => buttonActor.color = ex.Color.Transparent);
+    buttonActor.on('pointerleave', () => {
+      buttonActor.color = ex.Color.Transparent;
+      buttonActor.children.forEach(child => {
+        if (child instanceof ex.Actor) {
+          child.graphics.use('idle');
+        }
+      });
+    });
+    this.drawSelectFrame(buttonActor);
     this.add(buttonActor)
   }
 
-  drawSelectFrame(pos: ex.Vector){
-    let width = 80
-    let height = 80
+  drawSelectFrame(button: ex.Actor){
+    let width = 79;
+    let height = 104;
     let frameActor = new ex.Actor({
-      pos,
+      //pos: new ex.Vector(button.pos.x, button.pos.y),
+      pos: ex.vec(-1, 0),
       width,
       height,
-    })
-    let image = Resources.ui.portraitFrame
-    frameActor.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
-    this.add(frameActor)
+    });
+    const activeAnimation = ex.Animation.fromSpriteSheet(
+      frameSheet, 
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
+      100,
+      ex.AnimationStrategy.Loop    
+    );
+    const idleAnimation = ex.Animation.fromSpriteSheet(
+      frameSheet, 
+      [12], 
+      100,
+      ex.AnimationStrategy.Freeze    
+    );
+    frameActor.graphics.add('idle', idleAnimation);
+    frameActor.graphics.add('active', activeAnimation);
+    frameActor.graphics.use('idle');
+    button.addChild(frameActor);
   }
 
   beginGameWithSkin(skin: ex.SpriteSheet, engine: ex.Engine){

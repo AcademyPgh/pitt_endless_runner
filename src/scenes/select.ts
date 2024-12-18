@@ -1,7 +1,7 @@
 
 import * as ex from 'excalibur';
 import { playerSheets, Resources } from '../resources';
-// import { drawText } from '../utils/helpers';
+import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
 import { randomBetween } from '../utils/helpers';
 
@@ -11,7 +11,6 @@ class StartScene extends ex.Scene {
   public playerSkin: ex.SpriteSheet;
 
   onInitialize(engine: ex.Engine) {
-    //drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
     this.gradient = new ex.Actor({
       pos: ex.vec(250, 135),
       width: 500,
@@ -30,6 +29,7 @@ class StartScene extends ex.Scene {
     this.background.graphics.use(Resources.ui.characterSelect.toSprite());
     this.add(this.background);
     this.drawSelectOptions(playerSheets, engine);
+    drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
   }
 
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
@@ -68,9 +68,14 @@ class StartScene extends ex.Scene {
     let buttonActor = new ex.Actor({
         pos,
         width,
-        height
+        height,
+        color: ex.Color.Transparent
     })
     buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine))
+    buttonActor.on('pointerenter', () => {
+      buttonActor.color = new ex.Color(255, 255, 255, 0.25);
+    });
+    buttonActor.on('pointerleave', () => buttonActor.color = ex.Color.Transparent);
     this.add(buttonActor)
   }
 

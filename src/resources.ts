@@ -34,6 +34,7 @@ const playableCharacters = [playerBlack, playerRed, playerBlue]
 //UI assets
 import characterFrame from "./images/charframe.png";
 import fontImage from "./images/font/12pt.png";
+import characterSelect from "./images/characterSelect.png";
 
 export const Resources = {
   sheets: 
@@ -60,7 +61,8 @@ export const Resources = {
   },
   ui:{
     portraitFrame: new ImageSource(characterFrame),
-    mainFont: new ImageSource(fontImage)
+    mainFont: new ImageSource(fontImage),
+    characterSelect: new ImageSource(characterSelect)
   }
 
 } as const;

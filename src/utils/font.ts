@@ -18,6 +18,4 @@ const mainFont = new ex.SpriteFont({
   spriteSheet: font12pt
 });
 
-console.log(mainFont);
-
 export {mainFont};

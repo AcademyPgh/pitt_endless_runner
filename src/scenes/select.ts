@@ -1,49 +1,49 @@
 
 import * as ex from 'excalibur';
 import { playerSheets, Resources } from '../resources';
-import { drawText } from '../utils/helpers';
+// import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
-class StartScene extends ex.Scene {
 
-public playerSkin: ex.SpriteSheet;
+class StartScene extends ex.Scene {
+  private background: ex.Actor;
+  public playerSkin: ex.SpriteSheet;
+
   onInitialize(engine: ex.Engine) {
-    drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
+    //drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
+    this.background = new ex.Actor({
+      pos: ex.vec(250, 135),
+      width: 500,
+      height: 270
+    });
+    this.background.graphics.use(Resources.ui.characterSelect.toSprite())
+    this.add(this.background)
     this.drawSelectOptions(playerSheets, engine)
   }
 
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
-    Resources.sounds.character_select.play(.5)
     Resources.sounds.character_select.loop = true
-
+    Resources.sounds.character_select.play(.5)
   }
 
   drawSelectOptions(skins: ex.SpriteSheet[], engine: ex.Engine){
-    const height = 150;
-    const deadZone = 200
-    const xOffset = (engine.drawWidth - deadZone)/skins.length
-    for(let i = 0; i < skins.length; i++){
-        let finalX = i * xOffset + xOffset/2 + deadZone/2
-        this.drawSelectButton(skins[i], ex.vec(finalX, height), engine)
-    }
+    this.drawSelectButton(skins[0], ex.vec(63, 171), engine);
+    this.drawSelectButton(skins[1], ex.vec(153, 171), engine);
+    this.drawSelectButton(skins[2], ex.vec(243, 171), engine);
+    this.drawSelectButton(skins[0], ex.vec(333, 171), engine);
+    this.drawSelectButton(skins[1], ex.vec(423, 171), engine);
 
   }
 
   drawSelectButton(skin: ex.SpriteSheet, pos: ex.Vector, engine: ex.Engine)
   {
-    let width = 60
-    let height = 60
+    let width = 75
+    let height = 100
     let buttonActor = new ex.Actor({
         pos,
         width,
-        height,
-        color: ex.Color.Orange
+        height
     })
-    let sprite = skin.sprites[0].clone()
-    sprite.destSize.height = height
-    sprite.destSize.width = width
-    buttonActor.graphics.use(sprite)
     buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine))
-    this.drawSelectFrame(pos)
     this.add(buttonActor)
   }
 

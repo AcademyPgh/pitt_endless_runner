@@ -22,6 +22,8 @@ const frameSheet = ex.SpriteSheet.fromImageSource({
 class StartScene extends ex.Scene {
   private background: ex.Actor;
   private gradient: ex.Actor;
+  private selectedChar: number = 0;
+  private charButtons: ex.Actor[] = [];
   public playerSkin: ex.SpriteSheet;
 
   onInitialize(engine: ex.Engine) {
@@ -42,8 +44,9 @@ class StartScene extends ex.Scene {
     });
     this.background.graphics.use(Resources.ui.characterSelect.toSprite());
     this.add(this.background);
-    this.drawSelectOptions(playerSheets, engine);
+    this.drawSelectOptions(engine);
     drawText({scene: this, text: 'Choose your Character!', pos: ex.vec(engine.drawWidth/2, 70), color: ex.Color.White, scale: 1.5})
+    this.selectCharacter(0);
   }
 
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
@@ -66,16 +69,42 @@ class StartScene extends ex.Scene {
     }
   }
 
-  drawSelectOptions(skins: ex.SpriteSheet[], engine: ex.Engine){
-    this.drawSelectButton(skins[0], ex.vec(63, 171), engine);
-    this.drawSelectButton(skins[1], ex.vec(153, 171), engine);
-    this.drawSelectButton(skins[2], ex.vec(243, 171), engine);
-    this.drawSelectButton(skins[0], ex.vec(333, 171), engine);
-    this.drawSelectButton(skins[1], ex.vec(423, 171), engine);
+  drawSelectOptions(engine: ex.Engine){
+    this.drawSelectButton(0, ex.vec(63, 171), engine);
+    drawText({scene: this, text: 'Pounce', pos: ex.vec(63, 235), color: ex.Color.White, scale: 1});
+    this.drawSelectButton(1, ex.vec(153, 171), engine);
+    drawText({scene: this, text: 'Bruiser', pos: ex.vec(153, 235), color: ex.Color.White, scale: 1});
+    this.drawSelectButton(2, ex.vec(243, 171), engine);
+    drawText({scene: this, text: 'PJ', pos: ex.vec(243, 235), color: ex.Color.White, scale: 1});
+    this.drawSelectButton(3, ex.vec(333, 171), engine);
+    drawText({scene: this, text: 'UPB', pos: ex.vec(333, 235), color: ex.Color.White, scale: 1});
+    this.drawSelectButton(4, ex.vec(423, 171), engine);
+    drawText({scene: this, text: 'Roc', pos: ex.vec(423, 235), color: ex.Color.White, scale: 1});
 
   }
 
-  drawSelectButton(skin: ex.SpriteSheet, pos: ex.Vector, engine: ex.Engine)
+  selectCharacter(char: number) {
+    this.selectedChar = char;
+    this.charButtons.forEach((button, index) => {
+      if (index === char) {
+        button.color = new ex.Color(255, 255, 255, 0.25);
+        button.children.forEach(child => {
+          if (child instanceof ex.Actor) {
+            child.graphics.use('active');
+          }
+        });
+      } else {
+        button.color = ex.Color.Transparent;
+        button.children.forEach(child => {
+          if (child instanceof ex.Actor) {
+            child.graphics.use('idle');
+          }
+        });
+      }
+    });
+  }
+
+  drawSelectButton(char: number, pos: ex.Vector, engine: ex.Engine)
   {
     let width = 79
     let height = 104
@@ -85,22 +114,11 @@ class StartScene extends ex.Scene {
         height,
         color: ex.Color.Transparent
     });
+    this.charButtons[char] = buttonActor;
+    const skin = playerSheets[char];
     buttonActor.on('pointerdown', () => this.beginGameWithSkin(skin, engine));
     buttonActor.on('pointerenter', () => {
-      buttonActor.color = new ex.Color(255, 255, 255, 0.25);
-      buttonActor.children.forEach(child => {
-        if (child instanceof ex.Actor) {
-          child.graphics.use('active');
-        }
-      });
-    });
-    buttonActor.on('pointerleave', () => {
-      buttonActor.color = ex.Color.Transparent;
-      buttonActor.children.forEach(child => {
-        if (child instanceof ex.Actor) {
-          child.graphics.use('idle');
-        }
-      });
+      this.selectCharacter(char);       
     });
     this.drawSelectFrame(buttonActor);
     this.add(buttonActor)
@@ -140,6 +158,13 @@ class StartScene extends ex.Scene {
     Resources.sounds.character_select.stop()
     engine.goToScene('level')
     scoreProvider.openSession()
+  }
+
+  update(engine: ex.Engine, delta: number) {
+    super.update(engine, delta);
+    if(engine.input.keyboard.wasPressed(ex.Keys.Space)){
+      this.beginGameWithSkin(playerSheets[this.selectedChar], engine)
+    }
   }
 }
 

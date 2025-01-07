@@ -26,10 +26,12 @@ const crates = [crate]
 
 
 //character sheets here
-import playerBlack from "./images/playerSheet.png";
-import playerRed from "./images/playerSheetRed.png";
-import playerBlue from "./images/playerSheetBlue.png";
-const playableCharacters = [playerBlack, playerRed, playerBlue]
+import pj from "./images/pjSheet.png";
+import pounce from "./images/pounceSheet.png";
+import upb from "./images/upbSheet.png";
+import bruiser from "./images/bruiserSheet.png";
+import roc from "./images/rocSheet.png";
+const playableCharacters = [pj, bruiser, pounce, upb, roc]
 
 //UI assets
 import characterFrame from "./images/charframe.png";

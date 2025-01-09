@@ -33,6 +33,9 @@ import bruiser from "./images/bruiserSheet.png";
 import roc from "./images/rocSheet.png";
 const playableCharacters = [pj, bruiser, pounce, upb, roc]
 
+//birds
+import birdsheet from "./images/birds.png"
+
 //UI assets
 import characterFrame from "./images/charframe.png";
 import fontImage from "./images/font/12pt.png";
@@ -44,6 +47,8 @@ export const Resources = {
     playableCharacters.map(sheet => {return new ImageSource(sheet)}),
   crates:
     crates.map(box => {return new ImageSource(box)}),
+  birds:
+    [new ImageSource(birdsheet)],
   foregrounds: 
     foregrounds.map(fore => {return new ImageSource(fore)}),
     
@@ -81,4 +86,15 @@ export const playerSheets = Resources.sheets.map(source => {
       spriteHeight: 34
     }
 })
+})
+
+export const birdSheets = 
+  SpriteSheet.fromImageSource({
+    image: Resources.birds[0],
+    grid: {
+      columns: 4,
+      rows: 12,
+      spriteWidth: 16,
+      spriteHeight: 16
+    }
 })

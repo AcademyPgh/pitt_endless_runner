@@ -29,6 +29,7 @@ export class Crate extends ex.Actor
     onCollisionStart(_self: ex.Collider, other: ex.Collider, _side: ex.Side, _contact: ex.CollisionContact): void {
         if(other.owner != mainLevel.player) return
         mainLevel.speed *= speedPenalty;
+        mainLevel.crateCount++
         this.vel = ex.vec(mainLevel.speed * 1.5, -kickVelocity)
         this.angularVelocity = kickAngular
         this.body.group = noCollide

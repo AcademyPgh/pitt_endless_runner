@@ -5,9 +5,11 @@ import { Resources } from '../../resources';
 import { Crate } from './crate';
 import { mainLevel } from '../../scenes/level';
 import { randomBetween } from '../../utils/helpers';
+import { Flock } from './flock';
 
 const interiorSize = 90;
 const interiorChance = .25;
+const birdChance = .4
 const minPlatformWidth = 600
 const maxPlatformWidth = 1400;
 const minPlatformHeight = 100
@@ -15,6 +17,7 @@ const maxPlatformHeight = 200;
 const minGap = 100;
 const maxGap = 200;
 const maxCrates = 2;
+const random = new ex.Random
 
 export const startHeight = 100;
 
@@ -60,25 +63,36 @@ class Floors extends Actor {
     const x = lastFloor ? lastFloor.pos.x + (lastFloor.width / 2) + (width / 2) + gap : 0 + (width / 2);
     const floor = new Floor(x, floorHeight, image, width);
     this.addChild(floor);
-    if(interior)
-    {
-      const ceiling = new Floor(0, floorHeight, image, width)
-      ceiling.pos.y = -(interiorSize + ceiling.height)
-      floor.addChild(ceiling)
-    }
-    let crateCount = randomBetween(-2, maxCrates)
-    crateCount < 0 ? crateCount = 0 : crateCount = crateCount;
-    for(let i = 0; i < crateCount; i++)
-    {
-      let crateX = floor.width/(crateCount + 1) * (i + 1) 
-      crateX -= floor.width/2
-      const crate = new Crate(crateX, -floor.height/2)
-      floor.addChild(crate)
-    }
+    if(interior) this.addInterior(floorHeight, image, width, floor);
+    else if(random.bool(birdChance)) this.addBirds(floor)
+    this.addCrates(floor);
+    
     
 
     this.floors.push(floor);
     
+  }
+
+  private addInterior(floorHeight: number, image: ImageSource, width: number, floor: Floor) {
+    const ceiling = new Floor(0, floorHeight, image, width);
+    ceiling.pos.y = -(interiorSize + ceiling.height);
+    floor.addChild(ceiling);
+  }
+
+  private addCrates(floor: Floor) {
+    let crateCount = randomBetween(-2, maxCrates);
+    crateCount < 0 ? crateCount = 0 : crateCount = crateCount;
+    for (let i = 0; i < crateCount; i++) {
+      let crateX = floor.width / (crateCount + 1) * (i + 1);
+      crateX -= floor.width / 2;
+      const crate = new Crate(crateX, -floor.height / 2);
+      floor.addChild(crate);
+    }
+  }
+
+  private addBirds(floor: Floor){
+    let flock = new Flock(floor)
+    floor.addChild(flock)
   }
 
   onInitialize(): void {

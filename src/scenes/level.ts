@@ -11,9 +11,11 @@ class Level extends Scene {
   public speed: number;
   private speedIncrement = .3;
   public player?: Player;
+  public crateCount: number
 
   onActivate() {
     this.clear()
+    this.crateCount = 0
     var bg = new WorldBackground;
     this.add(bg);
     this.player = new Player(select.playerSkin);

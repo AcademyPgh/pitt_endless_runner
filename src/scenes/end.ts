@@ -6,6 +6,7 @@ import { scoreProvider } from '../utils/scoreprovider';
 import { InputField } from '../actors/ui/inputfield';
 import { mainFont } from '../utils/font';
 
+const cratePenalty = 100
 const maxNameLength = 3
 const profanity = [
   "ass", "baw", "bch", "bnt", "bdm", "bft", "btt", "c0k", "cnt", "crp", "dck", "dmb",
@@ -45,7 +46,7 @@ class EndScene extends ex.Scene {
   }
 
   getFinalScore() : number{
-    return Math.round(mainLevel.floors.distance)
+    return Math.round(mainLevel.floors.distance) - mainLevel.crateCount * cratePenalty
   }
 
   update(engine: ex.Engine, _delta: number): void {

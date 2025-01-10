@@ -1,4 +1,4 @@
-import { Actor, Color, CollisionType, Shape,  Engine, ImageSource } from 'excalibur';
+import { Actor, CollisionType, Shape,  Engine } from 'excalibur';
 import { Queue } from './Queue';
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
@@ -10,8 +10,8 @@ import { Flock } from './flock';
 const interiorSize = 90;
 const interiorChance = .25;
 const birdChance = .4
-const minPlatformWidth = 600
-const maxPlatformWidth = 1400;
+const minPlatformWidth = 10
+const maxPlatformWidth = 25;
 const minPlatformHeight = 100
 const maxPlatformHeight = 200;
 const minGap = 100;
@@ -21,20 +21,46 @@ const random = new ex.Random
 
 export const startHeight = 100;
 
+const topHeight = 64
+const botHeight = 192
+const chunkWidth = 32
+
 class Floor extends Actor {
-  constructor(x: number, floorHeight: number, image: ImageSource, width: number){
-    const scale = width/image.width;
-    const height = image.height * scale
+  constructor(x: number, floorHeight: number, unitWidth: number){
+    let height = topHeight + botHeight
+    let width = unitWidth * chunkWidth
     super({
     x,
     y: floorHeight + height/2,
     width,
     height,
-    color: Color.Rose,
     collisionType: CollisionType.Fixed,
     collider: Shape.Box(width, height),
     });
-    this.graphics.use(new ex.Sprite({image, destSize:{width, height}}))
+    console.log(width)
+    this.graphics.use(this.buildFloorGraphic(unitWidth))
+  }
+
+  buildFloorGraphic(width: number)
+  {
+    width -= 1
+    let members = [this.getGrouping(Resources.topStarts, ex.vec(0,0))]
+    members.push(this.getGrouping(Resources.botStarts, ex.vec(0, topHeight)))
+    for(let i = 1; i < width; i++){
+      let x = i * chunkWidth
+      members.push(this.getGrouping(Resources.topMids, ex.vec(x, 0)))
+      members.push(this.getGrouping(Resources.botMids, ex.vec(x, topHeight)))
+    }
+    let endX = width * chunkWidth
+    members.push(this.getGrouping(Resources.topEnds, ex.vec(endX, 0)))
+    members.push(this.getGrouping(Resources.botEnds, ex.vec(endX, topHeight)))
+    return new ex.GraphicsGroup({members})
+  }
+
+  getGrouping(graphics: ex.ImageSource[], offset: ex.Vector) : ex.GraphicsGrouping{
+    let index = random.integer(0, graphics.length-1)
+    let graphic = new ex.Sprite({image: graphics[index]})
+    return {graphic, offset}
   }
 
   onCollisionStart(_self: ex.Collider, other: ex.Collider, side: ex.Side, _contact: ex.CollisionContact): void {
@@ -56,25 +82,24 @@ class Floors extends Actor {
     });
   }
 
-  addFloor(image: ImageSource, width: number, floorHeight: number, gap: number, interior: boolean = false): void {
+  addFloor(width: number, floorHeight: number, gap: number, interior: boolean = false): void {
     // floors should always be added to the right of the last floor
     // they should always go from their given height to the bottom of the screen
     const lastFloor = this.floors.last();
-    const x = lastFloor ? lastFloor.pos.x + (lastFloor.width / 2) + (width / 2) + gap : 0 + (width / 2);
-    const floor = new Floor(x, floorHeight, image, width);
-    this.addChild(floor);
-    if(interior) this.addInterior(floorHeight, image, width, floor);
-    else if(random.bool(birdChance)) this.addBirds(floor)
-    this.addCrates(floor);
-    
-    
 
-    this.floors.push(floor);
+    const x = lastFloor ? lastFloor.pos.x + (lastFloor.width / 2) + (width * chunkWidth / 2) + gap : width * chunkWidth / 2;
+    const newFloor = new Floor(x, floorHeight, width);
+    this.addChild(newFloor);
+    if(interior) this.addInterior(floorHeight, width, newFloor);
+    else if(random.bool(birdChance)) this.addBirds(newFloor)
+    this.addCrates(newFloor);
+    
+    this.floors.push(newFloor);
     
   }
 
-  private addInterior(floorHeight: number, image: ImageSource, width: number, floor: Floor) {
-    const ceiling = new Floor(0, floorHeight, image, width);
+  private addInterior(floorHeight: number, width: number, floor: Floor) {
+    const ceiling = new Floor(0, floorHeight, width);
     ceiling.pos.y = -(interiorSize + ceiling.height);
     floor.addChild(ceiling);
   }
@@ -96,9 +121,9 @@ class Floors extends Actor {
   }
 
   onInitialize(): void {
-    this.addFloor(Resources.foregrounds[0], 700, startHeight,  50, true);
-    this.addFloor(Resources.foregrounds[0], 800, 200, 50);
-    this.addFloor(Resources.foregrounds[0], 500, 200,  50);
+    this.addFloor(20, startHeight,  50, true);
+    this.addFloor(10, 200, 100);
+    this.addFloor(10, 200, 100);
   }
 
   setSpeed(speed: number): void {
@@ -117,9 +142,7 @@ class Floors extends Actor {
 
   makeRandomFloor(): void {
     const interior = Math.random() < interiorChance;
-    const index = Math.floor(Math.random() * Resources.foregrounds.length);
-    const foreground = Resources.foregrounds[index]
-    this.addFloor(foreground, randomBetween(minPlatformWidth, maxPlatformWidth), 
+    this.addFloor(random.integer(minPlatformWidth, maxPlatformWidth), 
     randomBetween(minPlatformHeight, maxPlatformHeight), 
     randomBetween(minGap, maxGap), interior);
   }

@@ -16,9 +16,37 @@ import character_select_music from "./sounds/characterselect.mp3"
 import sound from "./sounds/jump.mp3"
 
 //foregrounds
-import fore1 from "./images/floorbuilding1.png"
-import fore2 from "./images/floorbuilding2.png"
-const foregrounds = [fore1, fore2]
+
+
+import foreTSA from "./images/foregroundbuildings/TopStart_A.png"
+import foreTSB from "./images/foregroundbuildings/TopStart_B.png"
+import foreTSC from "./images/foregroundbuildings/TopStart_C.png"
+
+import foreBSA from "./images/foregroundbuildings/BotStart_A.png"
+
+import foreTMA from "./images/foregroundbuildings/TopMid_A.png"
+import foreTMB from "./images/foregroundbuildings/TopMid_B.png"
+import foreTMC from "./images/foregroundbuildings/TopMid_C.png"
+import foreTMD from "./images/foregroundbuildings/TopMid_D.png"
+import foreTME from "./images/foregroundbuildings/TopMid_E.png"
+
+import foreBMA from "./images/foregroundbuildings/BotMid_A.png"
+import foreBMB from "./images/foregroundbuildings/BotMid_B.png"
+import foreBMC from "./images/foregroundbuildings/BotMid_C.png"
+
+
+import foreTEA from "./images/foregroundbuildings/TopEnd_A.png"
+import foreTEB from "./images/foregroundbuildings/TopEnd_B.png"
+import foreTEC from "./images/foregroundbuildings/TopEnd_C.png"
+
+import foreBEA from "./images/foregroundbuildings/BotEnd_A.png"
+
+const topStarts = [foreTSA, foreTSB, foreTSC]
+const botStarts = [foreBSA]
+const topMids = [foreTMA, foreTMB, foreTMC, foreTMD, foreTME]
+const botMids = [foreBMA, foreBMB, foreBMC]
+const topEnds = [foreTEA, foreTEB, foreTEC]
+const botEnds = [foreBEA]
 
 //small obstacles
 import crate from "./images/crate.png"
@@ -49,8 +77,13 @@ export const Resources = {
     crates.map(box => {return new ImageSource(box)}),
   birds:
     [new ImageSource(birdsheet)],
-  foregrounds: 
-    foregrounds.map(fore => {return new ImageSource(fore)}),
+    topStarts: mapToImageArray(topStarts),
+    botStarts: mapToImageArray(botStarts),
+    topMids: mapToImageArray(topMids),
+    botMids: mapToImageArray(botMids),
+    topEnds: mapToImageArray(topEnds),
+    botEnds: mapToImageArray(botEnds),
+    
     
   background: {
     cathedral: new ImageSource(cathedralSkyline),
@@ -75,6 +108,10 @@ export const Resources = {
   }
 
 } as const;
+
+function mapToImageArray(array: any[]){
+  return array.map(fore => {return new ImageSource(fore)})
+}
 
 export const playerSheets = Resources.sheets.map(source => {
   return SpriteSheet.fromImageSource({

@@ -4,7 +4,24 @@
   }
 }
 
-#excalibur-play {
-  background-color: #f00;
-  color: #fff;
+body {
+  background-color: #090909;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+div#excalibur-play-root {
+  left: 50% !important;
+  top: 100% !important;
+  transform:translate(-50%, -200%);
+}
+
+button#excalibur-play {
+  background-color: #ffb81c;
+  position: relative;
+  color: #003494;
+}
+button#excalibur-play:after {
+  border-color: transparent transparent transparent #003494;
 }

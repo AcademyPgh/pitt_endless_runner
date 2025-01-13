@@ -2,10 +2,14 @@ import * as ex from 'excalibur';
 import { scoreProvider } from '../utils/scoreprovider';
 import { Leaderboard } from '../actors/ui/leaderboard';
 import { drawText } from '../utils/helpers';
+import InputManager from '../utils/input';
 
 const overlayHeight = 50
-class Attract extends ex.Scene{
+class Attract extends ex.Scene
+{
     private activeLeaderboard: Leaderboard
+    private _input: InputManager | null = null;
+
     onActivate() {
         if(this.activeLeaderboard) this.remove(this.activeLeaderboard)
         this.loadLeaderboard()
@@ -13,6 +17,7 @@ class Attract extends ex.Scene{
 
     onInitialize(engine: ex.Engine): void {
         this.drawLowerOverlay(engine)
+        this._input = (engine as any).inputManager;
     }
 
     drawLowerOverlay(engine: ex.Engine){
@@ -32,11 +37,11 @@ class Attract extends ex.Scene{
 
     update(engine: ex.Engine, delta: number): void {
         super.update(engine, delta);
-          if(engine.input.keyboard.wasPressed(ex.Keys.Space)) {
+          if(this._input?.justPressed('jump')){
             engine.goToScene('select');
           }
 
       }
 }
 
-export const attract = new Attract
+export const attract = new Attract();

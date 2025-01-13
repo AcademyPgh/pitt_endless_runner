@@ -1,6 +1,8 @@
-import { Actor, vec, Animation, CollisionType, Collider, CollisionContact, Side, Shape, Engine, Keys, SpriteSheet } from "excalibur";
+import { Actor, vec, Animation, CollisionType, Collider, CollisionContact, Side, Shape, Engine, SpriteSheet } from "excalibur";
 import { Resources } from "../../resources";
 import { startHeight } from "../level/floor";
+import type {Game} from "../../main";
+import InputManager from "../../utils/input";
 
 const RUN = "RUN";
 const JUMP = "JUMP";
@@ -21,6 +23,9 @@ const playerXtarget = 50;
 
 export class Player extends Actor {
   private animations: Record<States, Animation>
+  private framesSinceAction: number = 0;
+  private input: InputManager | null = null;
+
   constructor(playerSpriteSheet: SpriteSheet) {
     super({
       z: 100,
@@ -49,8 +54,10 @@ export class Player extends Actor {
 
   private state = States.run;
 
-  onInitialize() {
+  onInitialize(engine: Engine) {
     this.graphics.use(this.animations[this.state]);
+    this.input = (engine as Game).inputManager;
+    console.log(this.input);
   }
 
   onPreUpdate(_engine: Engine, _delta: number): void {
@@ -62,25 +69,25 @@ export class Player extends Actor {
 
   private jumpTimer: number = 0
 
-
   update(engine: Engine, delta: number): void {
     super.update(engine, delta);
-      if(this.state === States.run && engine.input.keyboard.wasPressed(Keys.Space)) {
+      if(this.state === States.run && (this.input?.justPressed('jump'))){
         this.state = States.jump;
         this.graphics.use(this.animations[this.state]);
         this.jumpTimer = 0;
         Resources.sounds.jump.play(.5)
       }
-      else if(engine.input.keyboard.wasReleased(Keys.Space))
-        {
+      else if(this.input?.justReleased('jump') && this.state === States.jump)
+      {
           this.jumpTimer = jumpMax;
       }
 
-      if(this.jumpTimer < jumpMax && engine.input.keyboard.isHeld(Keys.Space)){
+      if(this.jumpTimer < jumpMax && (this.input?.isButtonPressed('jump'))){
         this.vel.y = -jumpStrength;
         this.jumpTimer += delta
       }
 
+      this.framesSinceAction += 1;
       // if(this.pos.x != playerXtarget){
       //   let direction = Math.sign(playerXtarget - this.pos.x)
       //   this.vel.x = direction * recoveryVelocity

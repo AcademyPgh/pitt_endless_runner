@@ -57,6 +57,9 @@ class Game extends ex.Engine {
           this.inputManager.handleButtonUp('jump', 'mouseLeft');
         }
       });
+      this.input.pointers.primary.on('cancel', () => {
+        this.inputManager.handleButtonUp('jump', 'mouseLeft');
+      });
 
       this.start(loader).then(() => super.goToScene('attract'))
     }

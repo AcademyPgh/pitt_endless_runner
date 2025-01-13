@@ -13,8 +13,8 @@ body {
 
 div#excalibur-play-root {
   left: 50% !important;
-  top: 100% !important;
-  transform:translate(-50%, -200%);
+  top: 0 !important;
+  transform:translate(-50%, min(40vw, 70vh));
 }
 
 button#excalibur-play {

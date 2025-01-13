@@ -18,10 +18,10 @@ div#excalibur-play-root {
 }
 
 button#excalibur-play {
-  background-color: #ffb81c;
-  position: relative;
-  color: #003494;
+  background-color: #ffb81c !important;
+  position: relative !important;
+  color: #003494 !important;
 }
 button#excalibur-play:after {
-  border-color: transparent transparent transparent #003494;
+  border-color: transparent transparent transparent #003494 !important;
 }

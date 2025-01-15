@@ -14,6 +14,12 @@ export function drawText(args: TextArgs) : ex.Actor{
     return textActor
 }
 
+export function loopClamp(x: number, min: number, max: number){
+    if(x < min) return max
+    else if(x > max) return min
+    return x
+}
+
 export interface TextArgs{
 
     text: string,

@@ -3,23 +3,22 @@ import * as ex from 'excalibur';
 import { mainLevel } from './level';
 import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
-import { InputField } from '../actors/ui/inputfield';
 import { mainFont } from '../utils/font';
+import { ArcadeInput } from '../actors/ui/arcadeinput';
 
 const cratePenalty = 100
 const maxNameLength = 3
 const profanity = [
-  "ass", "baw", "bch", "bnt", "bdm", "bft", "btt", "c0k", "cnt", "crp", "dck", "dmb",
-  "dks", "fag", "fuk", "fgt", "gdi", "gdw", "h3l", "h0e", "hom", "h0m", "jck", "kfc", "kys",
-  "lma", "lls", "mth", "n00", "nig", "n00b", "p0s", "phd", "pim", "prk", "pxt",
-  "qu3", "rdm", "scm", "sht", "skn", "shk", "sh1", "sht", "twt", "wtf", "wth"
+  "ass", "baw", "bch", "bnt", "bdm", "bft", "btt", "cok", "cnt", "crp", "dck", "dmb",
+  "dks", "fag", "fuk", "fgt", "gdi", "hom", "jck", "kfc", "kys", "mth", "nig", "pos", "pxt",
+  "rdm", "scm", "sht", "skn", "sht", "twt", "wtf", "wth"
 ];
 
 
 class EndScene extends ex.Scene {
 
  private scoreActor = new ex.Actor({pos: ex.vec(250,200), width: 100, height: 50});
- private textField: InputField
+ private arcadeField: ArcadeInput
  private submittedScore: boolean
 
   onInitialize(engine: ex.Engine) {
@@ -30,14 +29,14 @@ class EndScene extends ex.Scene {
 
   onActivate() {
     this.drawFinalScore(this.getFinalScore())
-    this.textField.clear()
+    this.arcadeField.clear()
     this.submittedScore = false
   }
 
   drawNameField(engine: ex.Engine){
     drawText({scene: this, text: 'Enter your initials, then press space\nto submit your score!', scale: 1, pos: ex.vec(engine.drawWidth/2,100)})
-    this.textField = new InputField(ex.vec(engine.drawWidth/2,150), maxNameLength)
-    this.add(this.textField)
+    this.arcadeField = new ArcadeInput(ex.vec(engine.drawWidth/2,150), maxNameLength)
+    this.add(this.arcadeField)
   }
 
   drawFinalScore(score: number){
@@ -49,19 +48,16 @@ class EndScene extends ex.Scene {
     return Math.round(mainLevel.floors.distance) - mainLevel.crateCount * cratePenalty
   }
 
-  update(engine: ex.Engine, _delta: number): void {
-    
+  update(engine: ex.Engine, delta: number): void {
+    super.update(engine, delta)
     if(!this.submittedScore && engine.input.keyboard.wasPressed(ex.Keys.Space))
     {
-      let name = this.textField.contents
-      if(name.length < 1){
-        //TODO: length warning
-      }
-      else if(profanity.includes(name.toLowerCase())){
+      let name = this.arcadeField.getContents()
+      if(profanity.includes(name.toLowerCase())){
         //TODO: profanity warning 
       }
       else{
-        this.sendScore(this.getFinalScore(), this.textField.contents)
+        this.sendScore(this.getFinalScore(), name)
       }
       
     }

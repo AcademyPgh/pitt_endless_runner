@@ -17,7 +17,6 @@ import sound from "./sounds/jump.mp3"
 
 //foregrounds
 
-
 import foreTSA from "./images/foregroundbuildings/TopStart_A.png"
 import foreTSB from "./images/foregroundbuildings/TopStart_B.png"
 import foreTSC from "./images/foregroundbuildings/TopStart_C.png"
@@ -43,8 +42,8 @@ import foreBEA from "./images/foregroundbuildings/BotEnd_A.png"
 
 const topStarts = [foreTSA, foreTSB, foreTSC]
 const botStarts = [foreBSA]
-const topMids = [foreTMA, foreTMB, foreTMC, foreTMD, foreTME]
-const botMids = [foreBMA, foreBMB, foreBMC]
+const topMids = [foreTMA, foreTMA, foreTMA, foreTMB, foreTMC, foreTMD, foreTME]
+const botMids = [foreBMA, foreBMA, foreBMB, foreBMC]
 const topEnds = [foreTEA, foreTEB, foreTEC]
 const botEnds = [foreBEA]
 
@@ -69,6 +68,7 @@ import characterFrame from "./images/charframe.png";
 import fontImage from "./images/font/12pt.png";
 import characterSelect from "./images/characterSelect.png";
 import gradient from "./images/gradient.png";
+import arrow from "./images/arrow.png";
 
 export const Resources = {
   sheets: 
@@ -77,12 +77,12 @@ export const Resources = {
     crates.map(box => {return new ImageSource(box)}),
   birds:
     [new ImageSource(birdsheet)],
-    topStarts: mapToImageArray(topStarts),
-    botStarts: mapToImageArray(botStarts),
-    topMids: mapToImageArray(topMids),
-    botMids: mapToImageArray(botMids),
-    topEnds: mapToImageArray(topEnds),
-    botEnds: mapToImageArray(botEnds),
+  topStarts: mapToImageArray(topStarts),
+  botStarts: mapToImageArray(botStarts),
+  topMids: mapToImageArray(topMids),
+  botMids: mapToImageArray(botMids),
+  topEnds: mapToImageArray(topEnds),
+  botEnds: mapToImageArray(botEnds),
     
     
   background: {
@@ -104,7 +104,8 @@ export const Resources = {
     portraitFrame: new ImageSource(characterFrame),
     mainFont: new ImageSource(fontImage),
     characterSelect: new ImageSource(characterSelect),
-    gradient: new ImageSource(gradient)
+    gradient: new ImageSource(gradient),
+    arrow: new ImageSource(arrow)
   }
 
 } as const;

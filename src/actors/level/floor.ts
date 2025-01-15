@@ -37,7 +37,6 @@ class Floor extends Actor {
     collisionType: CollisionType.Fixed,
     collider: Shape.Box(width, height),
     });
-    console.log(width)
     this.graphics.use(this.buildFloorGraphic(unitWidth))
   }
 

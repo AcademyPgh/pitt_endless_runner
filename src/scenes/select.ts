@@ -30,7 +30,8 @@ class StartScene extends ex.Scene {
     this.gradient = new ex.Actor({
       pos: ex.vec(250, 135),
       width: 500,
-      height: 270
+      height: 270,
+      z: -2
     });
     this.gradient.graphics.use(Resources.ui.gradient.toSprite());
     this.add(this.gradient);
@@ -40,7 +41,8 @@ class StartScene extends ex.Scene {
     this.background = new ex.Actor({
       pos: ex.vec(250, 135),
       width: 500,
-      height: 270
+      height: 270,
+      z: -1
     });
     this.background.graphics.use(Resources.ui.characterSelect.toSprite());
     this.add(this.background);
@@ -117,6 +119,7 @@ class StartScene extends ex.Scene {
         pos,
         width,
         height,
+        z: 5,
         color: ex.Color.Transparent
     });
     this.charButtons[char] = buttonActor;

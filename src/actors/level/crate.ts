@@ -12,7 +12,6 @@ export class Crate extends ex.Actor
 {
     constructor(x: number, floorHeight: number)
     {
-        const box = ex.Shape.Box(1, crateHeight)
         super({
             x,
             y: floorHeight- crateHeight/2,
@@ -20,9 +19,9 @@ export class Crate extends ex.Actor
             color: ex.Color.Blue,
             height: crateHeight,
             width: crateWidth,
-            collider: box,
             collisionType: ex.CollisionType.Active
         })
+        this.collider.useBoxCollider(1, crateHeight);
         this.graphics.use(new ex.Sprite({image: Resources.crates[0], destSize: {height: crateHeight, width: crateWidth }}))
     }
 

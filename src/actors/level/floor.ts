@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Shape,  Engine } from 'excalibur';
+import { Actor, CollisionType, Engine } from 'excalibur';
 import { Queue } from './Queue';
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
@@ -35,8 +35,7 @@ class Floor extends Actor {
     width,
     height,
     collisionType: CollisionType.Fixed,
-    collider: Shape.Box(width, height),
-    });
+     });
     this.graphics.use(this.buildFloorGraphic(unitWidth))
   }
 

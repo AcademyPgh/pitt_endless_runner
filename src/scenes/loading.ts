@@ -6,8 +6,8 @@ export const loader = new ex.Loader();
 //the logo has to be a base 64 string...
 loader.logo = logo;
 //the positioning is sensitive, and it seems like the loading bar is parented to the logo.......
-loader.logoPosition = ex.vec(212,25)
-loader.loadingBarPosition = ex.vec(70,200)
+loader.logoPosition = ex.vec(450, 20);
+loader.loadingBarPosition = ex.vec(250,200)
 loader.backgroundColor = '#003494'
 loader.playButtonText = 'Play!'
 

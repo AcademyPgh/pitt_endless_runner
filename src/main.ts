@@ -47,17 +47,17 @@ class Game extends ex.Engine {
           this.inputManager.handleButtonUp('start', 'enter');
         }
       });
-      this.input.pointers.primary.on('down', (evt: ex.PointerEvent) => {
+      this.input.pointers.on('down', (evt: ex.PointerEvent) => {
         if(evt.button === "Left") {
           this.inputManager.handleButtonDown('jump', 'mouseLeft');
         }
       });
-      this.input.pointers.primary.on('up', (evt: ex.PointerEvent) => {
+      this.input.pointers.on('up', (evt: ex.PointerEvent) => {
         if(evt.button === "Left") {
           this.inputManager.handleButtonUp('jump', 'mouseLeft');
         }
       });
-      this.input.pointers.primary.on('cancel', () => {
+      this.input.pointers.on('cancel', () => {
         this.inputManager.handleButtonUp('jump', 'mouseLeft');
       });
 
@@ -71,6 +71,5 @@ class Game extends ex.Engine {
   
   const game = new Game();
   game.initialize();
-  
   export {game};
   export type { Game };

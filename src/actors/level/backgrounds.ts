@@ -90,7 +90,7 @@ class WorldBackground extends Actor {
   onInitialize(): void {
     this.setSpeed(this.speed);
     for(let i = 0; i < this.layers.length; i++) {
-      this.layers[i].z = i;
+      this.layers[i].z = -10 + i;
       this.addChild(this.layers[i]);
     }
   }

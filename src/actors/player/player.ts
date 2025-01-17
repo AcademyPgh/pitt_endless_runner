@@ -57,7 +57,6 @@ export class Player extends Actor {
   onInitialize(engine: Engine) {
     this.graphics.use(this.animations[this.state]);
     this.input = (engine as Game).inputManager;
-    console.log(this.input);
   }
 
   onPreUpdate(_engine: Engine, _delta: number): void {

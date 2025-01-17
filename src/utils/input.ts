@@ -74,7 +74,6 @@ class InputManager {
         if (activeInputs) {
             activeInputs.add(inputId);
         }
-        console.log('button down', gameButton, inputId);
     }
 
     /**
@@ -87,7 +86,6 @@ class InputManager {
         if (activeInputs) {
             activeInputs.delete(inputId);
         }
-        console.log('button up', gameButton, inputId);
     }
 
     /**

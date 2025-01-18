@@ -85,6 +85,8 @@ class InputLetter extends ex.Actor{
         this.numberText = new ex.Text({text: "A", font: mainFont, scale: ex.vec(charScale, charScale)})
         this.changeCharacter(0)
         this.graphics.use(this.numberText)
+        
+        this.setActorInteractions(this)
     }
 
     addArrow(direction: number){
@@ -93,9 +95,20 @@ class InputLetter extends ex.Actor{
         sprite.flipVertical = direction > 0
         arrow.graphics.use(sprite)
         arrow.on('pointerdown', () => this.changeCharacter(direction))
+        this.setActorInteractions(arrow)
         this.arrows.push(arrow)
         this.addChild(arrow)
         this.toggleActive(false)
+    }
+
+    setActorInteractions(actor: ex.Actor){
+        actor.on('pointerenter', () => this.arrowFlash(actor))
+        actor.on('pointerup', () => this.arrowFlash(actor))
+        actor.on('pointerleave', () => {actor.actions.clearActions(); actor.graphics.opacity = 1})
+    }
+
+    arrowFlash(arrow: ex.Actor){
+        arrow.actions.repeatForever((context) => context.fade(0, 300).fade(1, 300))
     }
 
     changeCharacter(direction: number = 0){
@@ -116,6 +129,8 @@ class InputLetter extends ex.Actor{
     public toggleActive(setting: boolean){
         this.arrows.forEach(element => {
             this.removeChild(element)
+            element.actions.clearActions()
+            element.graphics.opacity = 1
             if(setting) this.addChild(element)
         });
     }

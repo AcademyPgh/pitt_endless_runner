@@ -3,21 +3,23 @@ import { scoreProvider } from '../utils/scoreprovider';
 import { Leaderboard } from '../actors/ui/leaderboard';
 import { drawText } from '../utils/helpers';
 import InputManager from '../utils/input';
+import { Game } from '../main';
 
 const overlayHeight = 50
 class Attract extends ex.Scene
 {
     private activeLeaderboard: Leaderboard
-    private _input: InputManager | null = null;
+    private _input: InputManager;
 
     onActivate() {
+        this._input?.clearAll();
         if(this.activeLeaderboard) this.remove(this.activeLeaderboard)
         this.loadLeaderboard()
     }
 
     onInitialize(engine: ex.Engine): void {
         this.drawLowerOverlay(engine)
-        this._input = (engine as any).inputManager;
+        this._input = (engine as Game).inputManager;
     }
 
     drawLowerOverlay(engine: ex.Engine){

@@ -24,17 +24,21 @@ class InputManager {
         // Initialize maps for all game buttons
         ['jump', 'start'].forEach(button => {
             const gameButton = button as GameButton;
-            this.buttonInputMap.set(gameButton, new Set());
-            this.currentButtonStates.set(gameButton, {
-                isPressed: false,
-                justPressed: false,
-                justReleased: false
-            });
-            this.previousButtonStates.set(gameButton, {
-                isPressed: false,
-                justPressed: false,
-                justReleased: false
-            });
+            this.resetButtonState(gameButton);
+        });
+    }
+
+    private resetButtonState(button: GameButton): void {
+        this.buttonInputMap.set(button, new Set());
+        this.currentButtonStates.set(button, {
+            isPressed: false,
+            justPressed: false,
+            justReleased: false
+        });
+        this.previousButtonStates.set(button, {
+            isPressed: false,
+            justPressed: false,
+            justReleased: false
         });
     }
 
@@ -104,6 +108,16 @@ class InputManager {
      */
     public justPressed(gameButton: GameButton): boolean {
         return this.currentButtonStates.get(gameButton)?.justPressed || false;
+    }
+
+    public clearAll() {
+        this.buttonInputMap.clear();
+        this.currentButtonStates.clear();
+        this.previousButtonStates.clear();
+        ['jump', 'start'].forEach(button => {
+            const gameButton = button as GameButton;
+            this.resetButtonState(gameButton);
+        });
     }
 
     /**

@@ -4,6 +4,8 @@ import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
 import { select } from './select';
 import { Resources } from '../resources';
+import InputManager from '../utils/input';
+import { Game } from '../main';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -11,9 +13,15 @@ class Level extends Scene {
   public speed: number;
   private speedIncrement = .3;
   public player?: Player;
-  public crateCount: number
+  public crateCount: number;
+  private _input: InputManager | null = null;
+
+  onInitialize(engine: Engine): void {
+    this._input = (engine as Game).inputManager;
+  }
 
   onActivate() {
+    this._input?.clearAll();
     this.clear()
     this.crateCount = 0
     var bg = new WorldBackground;

@@ -69,6 +69,7 @@ import fontImage from "./images/font/12pt.png";
 import characterSelect from "./images/characterSelect.png";
 import gradient from "./images/gradient.png";
 import arrow from "./images/arrow.png";
+import dream from "./images/dreamroom.png"
 
 export const Resources = {
   sheets: 
@@ -105,7 +106,8 @@ export const Resources = {
     mainFont: new ImageSource(fontImage),
     characterSelect: new ImageSource(characterSelect),
     gradient: new ImageSource(gradient),
-    arrow: new ImageSource(arrow)
+    arrow: new ImageSource(arrow),
+    dream: new ImageSource(dream),
   }
 
 } as const;

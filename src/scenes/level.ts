@@ -4,6 +4,7 @@ import { WorldBackground } from '../actors/level/backgrounds';
 import { Floors } from '../actors/level/floor';
 import { select } from './select';
 import { Resources } from '../resources';
+import * as ex from 'excalibur';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -43,8 +44,15 @@ class Level extends Scene {
   }
 
   gameover(engine: ex.Engine){
-    engine.goToScene('end');
+    let height = engine.canvasHeight
+    let width = engine.canvasWidth
+    let screen = new ex.Actor({height, width, z: 100, x: width/2, y: height/2})
+    let sprite = new ex.Sprite({image: Resources.ui.dream, destSize: {height, width}})
+    screen.graphics.use(sprite)
+    screen.graphics.opacity = 0
+    this.add(screen)
     Resources.sounds.music.pause()
+    screen.actions.fade(1, 1000).delay(3000).callMethod(() => engine.goToScene('end'))
   }
 }
 

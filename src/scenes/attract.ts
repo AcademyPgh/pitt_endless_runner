@@ -1,25 +1,32 @@
 import * as ex from 'excalibur';
 import { scoreProvider } from '../utils/scoreprovider';
 import { Leaderboard } from '../actors/ui/leaderboard';
-import { drawText } from '../utils/helpers';
+import { drawFullscreenPanel, drawText } from '../utils/helpers';
 import InputManager from '../utils/input';
 import { Game } from '../main';
+import { Resources } from '../resources';
 
 const overlayHeight = 50
+const cycleSeconds = 5
 class Attract extends ex.Scene
 {
     private activeLeaderboard: Leaderboard
     private _input: InputManager;
+    private cycleTimer: number = 0
+    private startScreen: ex.Actor
 
     onActivate() {
         this._input?.clearAll();
         if(this.activeLeaderboard) this.remove(this.activeLeaderboard)
         this.loadLeaderboard()
+        this.startScreen.graphics.opacity = 1
+        this.cycleTimer = 0
     }
 
     onInitialize(engine: ex.Engine): void {
         this.drawLowerOverlay(engine)
         this._input = (engine as Game).inputManager;
+        this.startScreen = drawFullscreenPanel(engine, Resources.ui.dream)
     }
 
     drawLowerOverlay(engine: ex.Engine){
@@ -42,7 +49,17 @@ class Attract extends ex.Scene
           if(this._input?.justPressed('jump')){
             engine.goToScene('select');
           }
+          this.cycleTimer += delta;
+          if(this.cycleTimer > cycleSeconds * 1000){
+            this.toggleAttractMode()
+          }
 
+      }
+
+      toggleAttractMode(){
+        this.cycleTimer = 0
+        let on = this.startScreen.graphics.opacity == 1
+        this.startScreen.actions.fade(on ? 0 : 1, 500)
       }
 }
 

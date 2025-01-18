@@ -7,6 +7,7 @@ import { Resources } from '../resources';
 import InputManager from '../utils/input';
 import { Game } from '../main';
 import * as ex from 'excalibur';
+import { drawFullscreenPanel } from '../utils/helpers';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -52,11 +53,7 @@ class Level extends Scene {
   }
 
   gameover(engine: ex.Engine){
-    let height = engine.canvasHeight
-    let width = engine.canvasWidth
-    let screen = new ex.Actor({height, width, z: 100, x: width/2, y: height/2})
-    let sprite = new ex.Sprite({image: Resources.ui.dream, destSize: {height, width}})
-    screen.graphics.use(sprite)
+    let screen = drawFullscreenPanel(engine, Resources.ui.dream);
     screen.graphics.opacity = 0
     this.add(screen)
     let height = engine.canvasHeight

@@ -20,6 +20,15 @@ export function loopClamp(x: number, min: number, max: number){
     return x
 }
 
+export function drawFullscreenPanel(engine: ex.Engine, image: ex.ImageSource) {
+    let height = engine.canvasHeight;
+    let width = engine.canvasWidth;
+    let screen = new ex.Actor({ height, width, z: 100, x: width / 2, y: height / 2 });
+    let sprite = new ex.Sprite({ image, destSize: { height, width } });
+    screen.graphics.use(sprite);
+    return screen;
+  }
+
 export interface TextArgs{
 
     text: string,

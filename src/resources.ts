@@ -71,7 +71,9 @@ import characterSelect from "./images/characterSelect.png";
 import gradient from "./images/gradient.png";
 import arrow from "./images/arrow.png";
 import dream from "./images/dreamroom.png";
-import startScreen from "./images/startScreen.png"
+import startScreen from "./images/startScreen.png";
+import dayofGiving from "./images/dayofGiving.png";
+import fbi from "./images/fbi.png";
 
 export const Resources = {
   sheets: 
@@ -112,6 +114,8 @@ export const Resources = {
     arrow: new ImageSource(arrow),
     dream: new ImageSource(dream),
     startScreen: new ImageSource(startScreen),
+    dayofGiving: new ImageSource(dayofGiving),
+    fbi: new ImageSource(fbi)
   }
 
 } as const;

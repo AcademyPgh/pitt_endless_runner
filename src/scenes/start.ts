@@ -8,6 +8,7 @@ class StartScreen extends ex.Scene {
     private timer: number = 0;
     private _input: InputManager;
     private background: ex.Actor;
+    private cycleSeconds = 8;
 
   onInitialize(engine: ex.Engine) {
     this.background = new ex.Actor({
@@ -78,7 +79,7 @@ class StartScreen extends ex.Scene {
     if(this.timer > 100 && this._input.justPressed('jump')) {
         engine.goToScene('select');
     }
-    if(this.timer > 6000) {
+    if(this.timer > this.cycleSeconds * 1000){
         engine.goToScene('attract');
     }
   }

@@ -7,7 +7,7 @@ import { Game } from '../main';
 import { Resources } from '../resources';
 
 const overlayHeight = 50
-const cycleSeconds = 8
+const cycleSeconds = 15
 class Attract extends ex.Scene
 {
     private activeLeaderboard: Leaderboard
@@ -56,7 +56,7 @@ class Attract extends ex.Scene
           engine.goToScene('select');
         }
         if(this.cycleTimer > cycleSeconds * 1000){
-         engine.goToScene('start');
+         engine.goToScene('doglogo');
         }
     }
 

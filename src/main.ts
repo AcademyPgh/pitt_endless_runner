@@ -4,6 +4,7 @@ import { mainLevel } from "./scenes/level";
 import { endScene } from "./scenes/end";
 import { gameover } from "./scenes/gameover";
 import { startScreen } from "./scenes/start";
+import { dogLogo } from "./scenes/doglogo";
 import * as ex from 'excalibur';
 import { attract } from "./scenes/attract";
 import { loader } from "./scenes/loading";
@@ -30,6 +31,7 @@ class Game extends ex.Engine {
           gameover: gameover,
           end: endScene,
           start: startScreen,
+          doglogo: dogLogo,
         },
         pointerScope: ex.PointerScope.Document
       });

@@ -23,7 +23,7 @@ class GameOver extends ex.Scene {
     this.background.graphics.opacity = 0;
     this.background.actions.fade(1, 1000);
     Resources.sounds.alarm.seek(.5);
-    Resources.sounds.alarm.play(.4);
+    Resources.sounds.alarm.play(.2);
   }
 
   update(engine: ex.Engine, elapsed: number): void {

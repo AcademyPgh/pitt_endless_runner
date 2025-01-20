@@ -3,6 +3,7 @@ import { select } from "./scenes/select";
 import { mainLevel } from "./scenes/level";
 import { endScene } from "./scenes/end";
 import { gameover } from "./scenes/gameover";
+import { startScreen } from "./scenes/start";
 import * as ex from 'excalibur';
 import { attract } from "./scenes/attract";
 import { loader } from "./scenes/loading";
@@ -27,7 +28,8 @@ class Game extends ex.Engine {
           select: select,
           level: mainLevel,
           gameover: gameover,
-          end: endScene
+          end: endScene,
+          start: startScreen,
         },
         pointerScope: ex.PointerScope.Document
       });
@@ -63,7 +65,7 @@ class Game extends ex.Engine {
         this.inputManager.handleButtonUp('jump', 'mouseLeft');
       });
 
-      this.start(loader).then(() => super.goToScene('attract'))
+      this.start(loader).then(() => super.goToScene('start'))
     }
     onPreUpdate(engine: ex.Engine, delta: number): void {
       this.inputManager.preUpdate();

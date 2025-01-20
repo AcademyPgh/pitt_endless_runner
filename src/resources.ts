@@ -14,6 +14,7 @@ import noCathedralSkyline from "./images/noCatherdralSkyline.png";
 import music from "./sounds/music.mp3"
 import character_select_music from "./sounds/characterselect.mp3"
 import sound from "./sounds/jump.mp3"
+import alarm from "./sounds/alarm.mp3"
 
 //foregrounds
 
@@ -69,7 +70,8 @@ import fontImage from "./images/font/12pt.png";
 import characterSelect from "./images/characterSelect.png";
 import gradient from "./images/gradient.png";
 import arrow from "./images/arrow.png";
-import dream from "./images/dreamroom.png"
+import dream from "./images/dreamroom.png";
+import startScreen from "./images/startScreen.png"
 
 export const Resources = {
   sheets: 
@@ -99,7 +101,8 @@ export const Resources = {
   sounds: {
     music: new Sound(music),
     character_select: new Sound(character_select_music),
-    jump: new Sound(sound)
+    jump: new Sound(sound),
+    alarm: new Sound(alarm),
   },
   ui:{
     portraitFrame: new ImageSource(characterFrame),
@@ -108,6 +111,7 @@ export const Resources = {
     gradient: new ImageSource(gradient),
     arrow: new ImageSource(arrow),
     dream: new ImageSource(dream),
+    startScreen: new ImageSource(startScreen),
   }
 
 } as const;

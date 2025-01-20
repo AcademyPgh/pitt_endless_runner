@@ -52,8 +52,11 @@ class StartScene extends ex.Scene {
   }
 
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
-    Resources.sounds.character_select.loop = true
-    Resources.sounds.character_select.play(.5)
+    if(!Resources.sounds.character_select.isPlaying())
+    {
+      Resources.sounds.character_select.loop = true
+      Resources.sounds.character_select.play(.5)
+    }
   }
 
   onPreDraw(_ctx: ex.ExcaliburGraphicsContext, _delta: number): void {
@@ -163,7 +166,7 @@ class StartScene extends ex.Scene {
 
   beginGameWithSkin(skin: ex.SpriteSheet, engine: ex.Engine){
     this.playerSkin = skin
-    Resources.sounds.character_select.stop()
+    Resources.sounds.character_select.pause()
     engine.goToScene('level')
     scoreProvider.openSession()
   }

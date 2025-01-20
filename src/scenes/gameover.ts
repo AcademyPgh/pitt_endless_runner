@@ -6,19 +6,22 @@ import InputManager from '../utils/input';
 class GameOver extends ex.Scene {
     private timer: number = 0;
     private _input: InputManager;
+    private background: ex.Actor;
   onInitialize(engine: ex.Engine) {
-    const bg = new ex.Actor({
+    this.background = new ex.Actor({
         pos: ex.vec(250, 135),
         width: engine.drawWidth,
         height: engine.drawHeight
     });
     this._input = (engine as Game).inputManager;
-    bg.graphics.use(Resources.ui.dream.toSprite());
-    this.add(bg);
+    this.background.graphics.use(Resources.ui.dream.toSprite());
+    this.add(this.background);
   }
 
   onActivate() {
     this.timer = 0;
+    this.background.graphics.opacity = 0;
+    this.background.actions.fade(1, 1000);
   }
 
   update(engine: ex.Engine, elapsed: number): void {

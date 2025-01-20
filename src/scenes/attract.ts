@@ -12,15 +12,17 @@ class Attract extends ex.Scene
 {
     private activeLeaderboard: Leaderboard
     private _input: InputManager;
-    private cycleTimer: number = 0
-    private startScreen: ex.Actor
+    private cycleTimer: number = 0;
+    private inputDelay: number = 0;
+    private startScreen: ex.Actor;
 
     onActivate() {
         this._input?.clearAll();
-        if(this.activeLeaderboard) this.remove(this.activeLeaderboard)
-        this.loadLeaderboard()
-        this.startScreen.graphics.opacity = 1
-        this.cycleTimer = 0
+        if(this.activeLeaderboard) this.remove(this.activeLeaderboard);
+        this.loadLeaderboard();
+        this.startScreen.graphics.opacity = 1;
+        this.cycleTimer = 0;
+        this.inputDelay = 0;
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -46,21 +48,21 @@ class Attract extends ex.Scene
 
     update(engine: ex.Engine, delta: number): void {
         super.update(engine, delta);
-          if(this._input?.justPressed('jump')){
-            engine.goToScene('select');
-          }
-          this.cycleTimer += delta;
-          if(this.cycleTimer > cycleSeconds * 1000){
-            this.toggleAttractMode()
-          }
+        this.inputDelay += delta;
+        if(this.inputDelay > 100 && this._input?.justPressed('jump')){
+          engine.goToScene('select');
+        }
+        this.cycleTimer += delta;
+        if(this.cycleTimer > cycleSeconds * 1000){
+          this.toggleAttractMode();
+        }
+    }
 
-      }
-
-      toggleAttractMode(){
+    toggleAttractMode(){
         this.cycleTimer = 0
-        let on = this.startScreen.graphics.opacity == 1
-        this.startScreen.actions.fade(on ? 0 : 1, 500)
-      }
+        let on = this.startScreen.graphics.opacity == 1;
+        this.startScreen.actions.fade(on ? 0 : 1, 500);
+    }
 }
 
 export const attract = new Attract();

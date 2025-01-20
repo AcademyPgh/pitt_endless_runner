@@ -24,29 +24,43 @@ class EndScene extends ex.Scene {
  private submittedScore: boolean
 
   onInitialize(engine: ex.Engine) {
-    drawText({scene: this, text: 'Game Over!', pos: ex.vec(engine.drawWidth/2,50), scale: 3})
-    this.add(this.scoreActor)
-    this.drawNameField(engine)
-    this.drawSubmitButton()
+    drawText({
+      scene: this, 
+      text: 'Game Over!', 
+      pos: ex.vec(engine.drawWidth/2,50), 
+      scale: 3});
+    this.add(this.scoreActor);
+    this.drawNameField(engine);
+    this.drawSubmitButton();
   }
 
   onActivate() {
-    this.drawFinalScore(this.getFinalScore())
-    this.arcadeField.clear()
-    this.submittedScore = false
+    this.drawFinalScore(this.getFinalScore());
+    this.arcadeField.clear();
+    this.submittedScore = false;
   }
 
   drawSubmitButton(){
-    let button = new ex.Actor({width: submitWidth, height: submitHeight, color: ex.Color.DarkGray, y: 230, x: 235})
-    drawText({text: "Submit", actor: button})
-    button.on('pointerdown', () => this.trySendScore())
-    this.add(button)
+    let button = new ex.Actor({
+      width: submitWidth, 
+      height: submitHeight, 
+      color: ex.Color.Transparent, 
+      y: 230, 
+      x: 235});
+    drawText({text: "Submit", actor: button, scale: 1.5});
+    button.on('pointerdown', () => this.trySendScore());
+    this.add(button);
   }
 
   drawNameField(engine: ex.Engine){
-    drawText({scene: this, text: 'Enter your initials, then press space\nto submit your score!', scale: 1, pos: ex.vec(engine.drawWidth/2,100)})
-    this.arcadeField = new ArcadeInput(ex.vec(engine.drawWidth/2,150), maxNameLength)
-    this.add(this.arcadeField)
+    drawText({
+      scene: this, 
+      text: 'Enter your initials, then press space\nto submit your score!', 
+      scale: 1, 
+      pos: ex.vec(engine.drawWidth/2,100)
+    });
+    this.arcadeField = new ArcadeInput(ex.vec(engine.drawWidth/2,150), maxNameLength);
+    this.add(this.arcadeField);
   }
 
   drawFinalScore(score: number){
@@ -63,7 +77,6 @@ class EndScene extends ex.Scene {
     if(!this.submittedScore && engine.input.keyboard.wasPressed(ex.Keys.Space))
     {
       this.trySendScore();
-      
     }
   }
 

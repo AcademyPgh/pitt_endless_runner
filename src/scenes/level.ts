@@ -7,7 +7,6 @@ import { Resources } from '../resources';
 import InputManager from '../utils/input';
 import { Game } from '../main';
 import * as ex from 'excalibur';
-import { drawFullscreenPanel } from '../utils/helpers';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -39,6 +38,11 @@ class Level extends Scene {
     Resources.sounds.music.loop = true
   }
 
+  onDeactivate(_context: ex.SceneActivationContext<undefined>): void {
+    this._input?.clearAll();
+    Resources.sounds.music.pause();
+  }
+
   update(engine: Engine, delta: number): void {
     super.update(engine, delta);
       if(this.speed > 0) this.speed += this.speedIncrement;
@@ -53,11 +57,12 @@ class Level extends Scene {
   }
 
   gameover(engine: ex.Engine){
-    let screen = drawFullscreenPanel(engine, Resources.ui.dream);
-    screen.graphics.opacity = 0
-    this.add(screen)
-    Resources.sounds.music.pause()
-    screen.actions.fade(1, 1000).delay(3000).callMethod(() => engine.goToScene('end'))
+    // let screen = drawFullscreenPanel(engine, Resources.ui.dream);
+    // screen.graphics.opacity = 0
+    // this.add(screen)
+    // Resources.sounds.music.pause()
+    // screen.actions.fade(1, 1000).delay(3000).callMethod(() => engine.goToScene('end'))
+    engine.goToScene('gameover');
   }
 }
 

@@ -75,6 +75,9 @@ class StartScreen extends ex.Scene {
 
   update(engine: ex.Engine, elapsed: number): void {
     super.update(engine, elapsed);
+    if(this.timer < 100 && this.timer + elapsed > 100) {
+        this._input?.clearAll();
+    }
     this.timer += elapsed;
     if(this.timer > 100 && this._input.justPressed('jump')) {
         engine.goToScene('select');

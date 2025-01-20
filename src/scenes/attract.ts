@@ -7,13 +7,12 @@ import { Game } from '../main';
 import { Resources } from '../resources';
 
 const overlayHeight = 50
-const cycleSeconds = 5
+const cycleSeconds = 15
 class Attract extends ex.Scene
 {
     private activeLeaderboard: Leaderboard
     private _input: InputManager;
     private cycleTimer: number = 0;
-    private inputDelay: number = 0;
     private startScreen: ex.Actor;
 
     onActivate() {
@@ -22,7 +21,11 @@ class Attract extends ex.Scene
         this.loadLeaderboard();
         this.startScreen.graphics.opacity = 1;
         this.cycleTimer = 0;
-        this.inputDelay = 0;
+        if(!Resources.sounds.character_select.isPlaying())
+        {
+          Resources.sounds.character_select.loop = true
+          Resources.sounds.character_select.play(.5)
+        }
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -48,21 +51,15 @@ class Attract extends ex.Scene
 
     update(engine: ex.Engine, delta: number): void {
         super.update(engine, delta);
-        this.inputDelay += delta;
-        if(this.inputDelay > 100 && this._input?.justPressed('jump')){
+        this.cycleTimer += delta;
+        if(this.cycleTimer > 100 && this._input?.justPressed('jump')){
           engine.goToScene('select');
         }
-        this.cycleTimer += delta;
         if(this.cycleTimer > cycleSeconds * 1000){
-          this.toggleAttractMode();
+         engine.goToScene('doglogo');
         }
     }
 
-    toggleAttractMode(){
-        this.cycleTimer = 0
-        let on = this.startScreen.graphics.opacity == 1;
-        this.startScreen.actions.fade(on ? 0 : 1, 500);
-    }
 }
 
 export const attract = new Attract();

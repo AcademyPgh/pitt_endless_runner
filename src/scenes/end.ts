@@ -5,6 +5,7 @@ import { drawText } from '../utils/helpers';
 import { scoreProvider } from '../utils/scoreprovider';
 import { mainFont } from '../utils/font';
 import { ArcadeInput } from '../actors/ui/arcadeinput';
+import { Resources } from '../resources';
 
 const cratePenalty = 100
 const maxNameLength = 3
@@ -38,6 +39,13 @@ class EndScene extends ex.Scene {
     this.drawFinalScore(this.getFinalScore());
     this.arcadeField.clear();
     this.submittedScore = false;
+  }
+
+  onDeactivate(_context: ex.SceneActivationContext<undefined>): void {
+    if(Resources.sounds.alarm.isPlaying())
+    {
+      Resources.sounds.alarm.stop();
+    }
   }
 
   drawSubmitButton(){

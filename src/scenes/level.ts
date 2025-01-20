@@ -6,6 +6,8 @@ import { select } from './select';
 import { Resources } from '../resources';
 import InputManager from '../utils/input';
 import { Game } from '../main';
+import * as ex from 'excalibur';
+import { drawText } from '../utils/helpers';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -33,8 +35,20 @@ class Level extends Scene {
     this.add(this.floors);
     this.speed = this.baseSpeed
     this.floors.setSpeed(this.speed)
+    const startText = drawText({
+      scene: this, 
+      text: 'GET TO THE GAME!', 
+      pos: ex.vec(250, 70), 
+      color: ex.Color.White, 
+      scale: 1.5});
+    startText.actions.blink(400, 50, 10).die();
     Resources.sounds.music.play(.5)
     Resources.sounds.music.loop = true
+  }
+
+  onDeactivate(_context: ex.SceneActivationContext<undefined>): void {
+    this._input?.clearAll();
+    Resources.sounds.music.pause();
   }
 
   update(engine: Engine, delta: number): void {
@@ -51,8 +65,12 @@ class Level extends Scene {
   }
 
   gameover(engine: ex.Engine){
-    engine.goToScene('end');
-    Resources.sounds.music.pause()
+    // let screen = drawFullscreenPanel(engine, Resources.ui.dream);
+    // screen.graphics.opacity = 0
+    // this.add(screen)
+    // Resources.sounds.music.pause()
+    // screen.actions.fade(1, 1000).delay(3000).callMethod(() => engine.goToScene('end'))
+    engine.goToScene('gameover');
   }
 }
 

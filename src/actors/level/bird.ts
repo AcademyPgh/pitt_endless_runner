@@ -51,7 +51,7 @@ export class Bird extends ex.Actor
     }
 
     update(): void {
-        let xDistance = Math.abs(mainLevel.player!.getGlobalPos().x - this.getGlobalPos().x)
+        let xDistance = Math.abs(mainLevel.player!.globalPos.x - this.globalPos.x)
         if(xDistance < triggerDistance && !this.flying) this.fly()
     }
 

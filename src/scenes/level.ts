@@ -7,6 +7,7 @@ import { Resources } from '../resources';
 import InputManager from '../utils/input';
 import { Game } from '../main';
 import * as ex from 'excalibur';
+import { drawText } from '../utils/helpers';
 
 class Level extends Scene {
   private baseSpeed = 150;
@@ -34,6 +35,13 @@ class Level extends Scene {
     this.add(this.floors);
     this.speed = this.baseSpeed
     this.floors.setSpeed(this.speed)
+    const startText = drawText({
+      scene: this, 
+      text: 'GET TO THE GAME!', 
+      pos: ex.vec(250, 70), 
+      color: ex.Color.White, 
+      scale: 1.5});
+    startText.actions.blink(400, 50, 10).die();
     Resources.sounds.music.play(.5)
     Resources.sounds.music.loop = true
   }

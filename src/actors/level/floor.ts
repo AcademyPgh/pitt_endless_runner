@@ -42,16 +42,17 @@ class Floor extends Actor {
   buildFloorGraphic(width: number)
   {
     width -= 1
-    let members = [this.getGrouping(Resources.topStarts, ex.vec(0,0))]
-    members.push(this.getGrouping(Resources.botStarts, ex.vec(0, topHeight)))
+    const style = random.integer(0, Resources.floors.length-1);
+    let members = [this.getGrouping(Resources.floors[style].topStarts, ex.vec(0,0))]
+    members.push(this.getGrouping(Resources.floors[style].botStarts, ex.vec(0, topHeight)))
     for(let i = 1; i < width; i++){
       let x = i * chunkWidth
-      members.push(this.getGrouping(Resources.topMids, ex.vec(x, 0)))
-      members.push(this.getGrouping(Resources.botMids, ex.vec(x, topHeight)))
+      members.push(this.getGrouping(Resources.floors[style].topMids, ex.vec(x, 0)))
+      members.push(this.getGrouping(Resources.floors[style].botMids, ex.vec(x, topHeight)))
     }
     let endX = width * chunkWidth
-    members.push(this.getGrouping(Resources.topEnds, ex.vec(endX, 0)))
-    members.push(this.getGrouping(Resources.botEnds, ex.vec(endX, topHeight)))
+    members.push(this.getGrouping(Resources.floors[style].topEnds, ex.vec(endX, 0)))
+    members.push(this.getGrouping(Resources.floors[style].botEnds, ex.vec(endX, topHeight)))
     return new ex.GraphicsGroup({members})
   }
 

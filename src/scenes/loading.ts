@@ -11,9 +11,25 @@ loader.loadingBarPosition = ex.vec(250,200)
 loader.backgroundColor = '#003494'
 loader.playButtonText = 'Play!'
 
+function loadResourcesRecursively(resource: any, loader: ex.Loader): void {
+  // Base case: if resource is Sound or ImageSource, load it
+  if (resource instanceof ex.Sound || resource instanceof ex.ImageSource) {
+      loader.addResource(resource);
+      return;
+  }
 
-for (const group of Object.values(Resources)) {
-  for (const res of Object.values(group)) {
-    loader.addResource(res);
+  // If we have an array, process each element
+  if (Array.isArray(resource)) {
+      resource.forEach(item => loadResourcesRecursively(item, loader));
+      return;
+  }
+
+  // If we have an object, process each value
+  if (resource && typeof resource === 'object') {
+      Object.values(resource).forEach(value => loadResourcesRecursively(value, loader));
+      return;
   }
 }
+
+
+loadResourcesRecursively(Resources, loader);

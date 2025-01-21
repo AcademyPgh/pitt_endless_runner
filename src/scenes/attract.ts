@@ -14,6 +14,7 @@ class Attract extends ex.Scene
     private _input: InputManager;
     private cycleTimer: number = 0;
     private startScreen: ex.Actor;
+    private cycle: number = 2;
 
     onActivate() {
         this._input?.clearAll();
@@ -26,6 +27,7 @@ class Attract extends ex.Scene
           Resources.sounds.character_select.loop = true
           Resources.sounds.character_select.play(.5)
         }
+        this.cycle += 1;
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -56,7 +58,13 @@ class Attract extends ex.Scene
           engine.goToScene('select');
         }
         if(this.cycleTimer > cycleSeconds * 1000){
-         engine.goToScene('doglogo');
+          if(this.cycle % 4 === 0){
+            engine.goToScene('credits');
+          }
+          else
+          {
+            engine.goToScene('doglogo');
+          }
         }
     }
 

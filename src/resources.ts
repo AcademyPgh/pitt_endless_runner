@@ -1,4 +1,5 @@
 import { ImageSource, SpriteSheet, Sound } from "excalibur";
+import { BuildingCounts, generateBuildingArrays, InteriorCounts, generateInteriorArrays } from "./utils/resourcehelpers";
 
 //backgrounds
 import cathedralSkyline from "./images/cathedralSkyline.png";
@@ -17,40 +18,47 @@ import sound from "./sounds/jump.mp3"
 import alarm from "./sounds/alarm.mp3"
 
 //foregrounds
-
-import foreTSA from "./images/foregroundbuildings/TopStart_A.png"
-import foreTSB from "./images/foregroundbuildings/TopStart_B.png"
-import foreTSC from "./images/foregroundbuildings/TopStart_C.png"
-
-import foreBSA from "./images/foregroundbuildings/BotStart_A.png"
-
-import foreTMA from "./images/foregroundbuildings/TopMid_A.png"
-import foreTMB from "./images/foregroundbuildings/TopMid_B.png"
-import foreTMC from "./images/foregroundbuildings/TopMid_C.png"
-import foreTMD from "./images/foregroundbuildings/TopMid_D.png"
-import foreTME from "./images/foregroundbuildings/TopMid_E.png"
-
-import foreBMA from "./images/foregroundbuildings/BotMid_A.png"
-import foreBMB from "./images/foregroundbuildings/BotMid_B.png"
-import foreBMC from "./images/foregroundbuildings/BotMid_C.png"
-
-
-import foreTEA from "./images/foregroundbuildings/TopEnd_A.png"
-import foreTEB from "./images/foregroundbuildings/TopEnd_B.png"
-import foreTEC from "./images/foregroundbuildings/TopEnd_C.png"
-
-import foreBEA from "./images/foregroundbuildings/BotEnd_A.png"
-
-const topStarts = [foreTSA, foreTSB, foreTSC]
-const botStarts = [foreBSA]
-const topMids = [foreTMA, foreTMA, foreTMA, foreTMB, foreTMC, foreTMD, foreTME]
-const botMids = [foreBMA, foreBMA, foreBMB, foreBMC]
-const topEnds = [foreTEA, foreTEB, foreTEC]
-const botEnds = [foreBEA]
+const greenCounts: BuildingCounts = {
+  topStart: 3, // A, B, C
+  botStart: 1, // A
+  topMid: 5,   // A, B, C, D, E
+  botMid: 3,   // A, B, C
+  topEnd: 3,   // A, B, C
+  botEnd: 1    // A
+};
+const brickCounts: BuildingCounts = {
+  topStart: 1, 
+  botStart: 4, 
+  topMid: 2,   
+  botMid: 4,   
+  topEnd: 1,   
+  botEnd: 4    
+};
+const interiorCounts: InteriorCounts = {
+  topStart: 1, 
+  botStart: 3, 
+  topMid: 2,   
+  botMid: 4,   
+  topEnd: 1,   
+  botEnd: 3,
+  styles: [
+    {intStart: 1, intMid: 4, intEnd: 1},
+    {intStart: 1, intMid: 4, intEnd: 1},
+    {intStart: 1, intMid: 12, intEnd: 1},
+  ]
+}
+const basePath = "./images/buildings/";
+const greenBuildings = generateBuildingArrays(basePath + "type_01", greenCounts);
+const brickBuildings = generateBuildingArrays(basePath + "type_02", brickCounts);
+const interiorBuildings = generateInteriorArrays(basePath + "type_10", interiorCounts);
 
 //small obstacles
-import crate from "./images/crate.png"
-const crates = [crate]
+const crates = [
+  "./images/props/small_crate_01.png", 
+  "./images/props/small_crate_02.png", 
+  // "./images/props/large_crate_01.png",
+  // "./images/props/large_crate_02.png",
+]
 
 
 //character sheets here
@@ -82,12 +90,41 @@ export const Resources = {
     crates.map(box => {return new ImageSource(box)}),
   birds:
     [new ImageSource(birdsheet)],
-  topStarts: mapToImageArray(topStarts),
-  botStarts: mapToImageArray(botStarts),
-  topMids: mapToImageArray(topMids),
-  botMids: mapToImageArray(botMids),
-  topEnds: mapToImageArray(topEnds),
-  botEnds: mapToImageArray(botEnds),
+  floors: [
+    {
+      topStarts: mapToImageArray(greenBuildings.topStarts),
+      botStarts: mapToImageArray(greenBuildings.botStarts),
+      topMids: mapToImageArray(greenBuildings.topMids),
+      botMids: mapToImageArray(greenBuildings.botMids),
+      topEnds: mapToImageArray(greenBuildings.topEnds),
+      botEnds: mapToImageArray(greenBuildings.botEnds),
+    },
+    {
+      topStarts: mapToImageArray(brickBuildings.topStarts),
+      botStarts: mapToImageArray(brickBuildings.botStarts),
+      topMids: mapToImageArray(brickBuildings.topMids),
+      botMids: mapToImageArray(brickBuildings.botMids),
+      topEnds: mapToImageArray(brickBuildings.topEnds),
+      botEnds: mapToImageArray(brickBuildings.botEnds),
+    },
+  ],
+  interiors: [
+    {
+      topStarts: mapToImageArray(interiorBuildings.topStarts),
+      botStarts: mapToImageArray(interiorBuildings.botStarts),
+      topMids: mapToImageArray(interiorBuildings.topMids),
+      botMids: mapToImageArray(interiorBuildings.botMids),
+      topEnds: mapToImageArray(interiorBuildings.topEnds),
+      botEnds: mapToImageArray(interiorBuildings.botEnds),
+      interiors: interiorBuildings.styles.map(style => {
+        return {
+          intStarts: mapToImageArray(style.intStarts),
+          intMids: mapToImageArray(style.intMids),
+          intEnds: mapToImageArray(style.intEnds)
+        }
+      })
+    }
+  ],
     
     
   background: {
@@ -121,7 +158,8 @@ export const Resources = {
 } as const;
 
 function mapToImageArray(array: any[]){
-  return array.map(fore => {return new ImageSource(fore)})
+  const temp = array.map(fore => {return new ImageSource(fore)})
+  return temp;
 }
 
 export const playerSheets = Resources.sheets.map(source => {

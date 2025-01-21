@@ -34,12 +34,14 @@ class DogLogo extends ex.Scene {
     this.activation += 1;
     this.fbi.graphics.opacity = 0;
     this.background.graphics.opacity = 0;
-    if(this.activation % 3 === 0) {
-        this.fbi.actions.fade(1, 500);
-    }
-    else {
-        this.background.actions.fade(1, 500);
-    }
+    // Remove FBI Logo
+    // if(this.activation % 3 === 0) {
+    //     this.fbi.actions.fade(1, 500);
+    // }
+    // else {
+    //     this.background.actions.fade(1, 500);
+    // }
+    this.background.actions.fade(1, 500);
     this._input?.clearAll();
     if(!Resources.sounds.character_select.isPlaying())
     {

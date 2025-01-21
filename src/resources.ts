@@ -18,37 +18,6 @@ import sound from "./sounds/jump.mp3"
 import alarm from "./sounds/alarm.mp3"
 
 //foregrounds
-
-// import foreTSA from "./images/foregroundbuildings/TopStart_A.png"
-// import foreTSB from "./images/foregroundbuildings/TopStart_B.png"
-// import foreTSC from "./images/foregroundbuildings/TopStart_C.png"
-
-// import foreBSA from "./images/foregroundbuildings/BotStart_A.png"
-
-// import foreTMA from "./images/foregroundbuildings/TopMid_A.png"
-// import foreTMB from "./images/foregroundbuildings/TopMid_B.png"
-// import foreTMC from "./images/foregroundbuildings/TopMid_C.png"
-// import foreTMD from "./images/foregroundbuildings/TopMid_D.png"
-// import foreTME from "./images/foregroundbuildings/TopMid_E.png"
-
-// import foreBMA from "./images/foregroundbuildings/BotMid_A.png"
-// import foreBMB from "./images/foregroundbuildings/BotMid_B.png"
-// import foreBMC from "./images/foregroundbuildings/BotMid_C.png"
-
-
-// import foreTEA from "./images/foregroundbuildings/TopEnd_A.png"
-// import foreTEB from "./images/foregroundbuildings/TopEnd_B.png"
-// import foreTEC from "./images/foregroundbuildings/TopEnd_C.png"
-
-// import foreBEA from "./images/foregroundbuildings/BotEnd_A.png"
-
-// const topStarts = [foreTSA, foreTSB, foreTSC]
-// const botStarts = [foreBSA]
-// const topMids = [foreTMA, foreTMA, foreTMA, foreTMB, foreTMC, foreTMD, foreTME]
-// const botMids = [foreBMA, foreBMA, foreBMB, foreBMC]
-// const topEnds = [foreTEA, foreTEB, foreTEC]
-// const botEnds = [foreBEA]
-
 const greenCounts: BuildingCounts = {
   topStart: 3, // A, B, C
   botStart: 1, // A

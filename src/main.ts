@@ -9,6 +9,7 @@ import * as ex from 'excalibur';
 import { attract } from "./scenes/attract";
 import { loader } from "./scenes/loading";
 import InputManager from "./utils/input";
+import { credits } from "./scenes/credits";
 
 const gravity = 1200
 class Game extends ex.Engine {
@@ -32,6 +33,7 @@ class Game extends ex.Engine {
           end: endScene,
           start: startScreen,
           doglogo: dogLogo,
+          credits: credits
         },
         pointerScope: ex.PointerScope.Document
       });
@@ -67,7 +69,7 @@ class Game extends ex.Engine {
         this.inputManager.handleButtonUp('jump', 'mouseLeft');
       });
 
-      this.start(loader).then(() => super.goToScene('start'))
+      this.start(loader).then(() => super.goToScene('credits'))
     }
     onPreUpdate(engine: ex.Engine, delta: number): void {
       this.inputManager.preUpdate();

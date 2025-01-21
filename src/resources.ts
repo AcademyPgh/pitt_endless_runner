@@ -42,8 +42,12 @@ const brickBuildings = generateBuildingArrays(basePath + "type_02", brickCounts)
 
 
 //small obstacles
-import crate from "./images/crate.png"
-const crates = [crate]
+const crates = [
+  "./images/props/small_crate_01.png", 
+  "./images/props/small_crate_02.png", 
+  // "./images/props/large_crate_01.png",
+  // "./images/props/large_crate_02.png",
+]
 
 
 //character sheets here

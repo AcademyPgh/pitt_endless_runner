@@ -69,7 +69,7 @@ class Game extends ex.Engine {
         this.inputManager.handleButtonUp('jump', 'mouseLeft');
       });
 
-      this.start(loader).then(() => super.goToScene('credits'))
+      this.start(loader).then(() => super.goToScene('start'));
     }
     onPreUpdate(engine: ex.Engine, delta: number): void {
       this.inputManager.preUpdate();

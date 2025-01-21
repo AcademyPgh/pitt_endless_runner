@@ -1,11 +1,12 @@
 import * as ex from 'excalibur';
 import { drawText } from '../utils/helpers';
 import InputManager from '../utils/input';
+import { Game } from '../main';
 
 const entrySeconds = 1
 const lineGap = 20
 const headerScale = 1.5
-const cycleSeconds = 5
+const cycleSeconds = 20
 class Credits extends ex.Scene
 {
     private _input: InputManager;
@@ -22,11 +23,17 @@ class Credits extends ex.Scene
 
     onInitialize(engine: ex.Engine): void 
     {
-        this.buildCredits(engine)
-        
+      this.buildCredits(engine)
+      this._input = (engine as Game).inputManager;
     }
+
+    onActivate(_context: ex.SceneActivationContext<unknown>): void {
+      this.cycleTimer = 0;
+    }
+
     update(engine: ex.Engine, delta: number): void {
         super.update(engine, delta);
+        this.cycleTimer += delta;
         if(this._input?.justPressed('jump')){
             engine.goToScene('select');
           }

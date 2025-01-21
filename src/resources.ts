@@ -1,5 +1,5 @@
 import { ImageSource, SpriteSheet, Sound } from "excalibur";
-import { BuildingCounts, generateBuildingArrays } from "./utils/resourcehelpers";
+import { BuildingCounts, generateBuildingArrays, InteriorCounts, generateInteriorArrays } from "./utils/resourcehelpers";
 
 //backgrounds
 import cathedralSkyline from "./images/cathedralSkyline.png";
@@ -34,12 +34,23 @@ const brickCounts: BuildingCounts = {
   topEnd: 1,   
   botEnd: 4    
 };
-
+const interiorCounts: InteriorCounts = {
+  topStart: 1, 
+  botStart: 3, 
+  topMid: 2,   
+  botMid: 4,   
+  topEnd: 1,   
+  botEnd: 3,
+  styles: [
+    {intStart: 1, intMid: 4, intEnd: 1},
+    {intStart: 1, intMid: 4, intEnd: 1},
+    {intStart: 1, intMid: 12, intEnd: 1},
+  ]
+}
 const basePath = "./images/buildings/";
 const greenBuildings = generateBuildingArrays(basePath + "type_01", greenCounts);
 const brickBuildings = generateBuildingArrays(basePath + "type_02", brickCounts);
-
-
+const interiorBuildings = generateInteriorArrays(basePath + "type_10", interiorCounts);
 
 //small obstacles
 const crates = [
@@ -97,7 +108,23 @@ export const Resources = {
       botEnds: mapToImageArray(brickBuildings.botEnds),
     },
   ],
-  blerk: mapToImageArray(greenBuildings.topMids),
+  interiors: [
+    {
+      topStarts: mapToImageArray(interiorBuildings.topStarts),
+      botStarts: mapToImageArray(interiorBuildings.botStarts),
+      topMids: mapToImageArray(interiorBuildings.topMids),
+      botMids: mapToImageArray(interiorBuildings.botMids),
+      topEnds: mapToImageArray(interiorBuildings.topEnds),
+      botEnds: mapToImageArray(interiorBuildings.botEnds),
+      interiors: interiorBuildings.styles.map(style => {
+        return {
+          intStarts: mapToImageArray(style.intStarts),
+          intMids: mapToImageArray(style.intMids),
+          intEnds: mapToImageArray(style.intEnds)
+        }
+      })
+    }
+  ],
     
     
   background: {

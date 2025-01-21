@@ -22,16 +22,16 @@ class StartScreen extends ex.Scene {
     drawText({
         scene: this, 
         text: 'Day of Giving', 
-        pos: ex.vec(360, 60), 
+        pos: ex.vec(engine.drawWidth/2, 30), 
         color: ex.Color.White, 
         scale: 1.5
     })
     drawText({
         scene: this, 
         text: 'DASH', 
-        pos: ex.vec(360, 100), 
+        pos: ex.vec(engine.drawWidth/2, 90), 
         color: ex.Color.White, 
-        scale: 2.5
+        scale: 4
     })
     drawText({
         scene: this, 

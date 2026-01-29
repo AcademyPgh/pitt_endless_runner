@@ -104,8 +104,8 @@ const clouds = [
   Resources.background.cloudscape3,
   Resources.background.cloudscape4
 ]
-const cathedral = [Resources.background.cathedral,Resources.background.noCathedral]
-const city = [Resources.background.city]
+const cathedral = Resources.background.bigBuildings; // [Resources.background.cathedral,Resources.background.noCathedral]
+const city = Resources.background.city;
 const citySkyline = [Resources.background.citySkyline]
 
 

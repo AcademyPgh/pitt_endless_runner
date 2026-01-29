@@ -2,14 +2,23 @@ import { ImageSource, SpriteSheet, Sound } from "excalibur";
 import { BuildingCounts, generateBuildingArrays, InteriorCounts, generateInteriorArrays } from "./utils/resourcehelpers";
 
 //backgrounds
-import cathedralSkyline from "./images/cathedralSkyline.png";
-import citySkyline from "./images/citySkyline.png";
-import cityBuildings from "./images/cityBuildings.png";
+// import cathedralSkyline from "./images/cathedralSkyline.png";
+import bigBuilding1 from "./images/bigBuilding1.png";
+import bigBuilding2 from "./images/bigBuilding2.png";
+import bigBuilding3 from "./images/bigBuilding3.png";
+import citySkyline from "./images/citySkyline1.png";
+// import cityBuildings from "./images/cityBuildings.png";
+import cityBuildings1 from "./images/front1.png";
+import cityBuildings2 from "./images/front2.png";
+import cityBuildings3 from "./images/front3.png";
 import cloudscape1 from "./images/Cloudscape1.png";
 import cloudscape2 from "./images/Cloudscape2.png";
 import cloudscape3 from "./images/Cloudscape3.png";
 import cloudscape4 from "./images/Cloudscape4.png";
-import noCathedralSkyline from "./images/noCatherdralSkyline.png";
+// import noCathedralSkyline from "./images/noCatherdralSkyline.png";
+const bigBuildings = [bigBuilding1, bigBuilding2, bigBuilding3];
+const cityBuildings = [cityBuildings1, cityBuildings2, cityBuildings3];
+
 
 //sfx
 import music from "./sounds/music.mp3"
@@ -128,14 +137,13 @@ export const Resources = {
     
     
   background: {
-    cathedral: new ImageSource(cathedralSkyline),
-    city: new ImageSource(cityBuildings),
+    city: mapToImageArray(cityBuildings),
     citySkyline: new ImageSource(citySkyline),
     cloudscape1: new ImageSource(cloudscape1),
     cloudscape2: new ImageSource(cloudscape2),
     cloudscape3: new ImageSource(cloudscape3),
     cloudscape4: new ImageSource(cloudscape4),
-    noCathedral: new ImageSource(noCathedralSkyline),
+    bigBuildings: mapToImageArray(bigBuildings),
   },
   sounds: {
     music: new Sound(music),

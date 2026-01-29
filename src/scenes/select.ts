@@ -85,7 +85,7 @@ class StartScene extends ex.Scene {
     drawText({scene: this, text: 'Pounce', pos: ex.vec(243, 235), color: ex.Color.White, scale: 1});
     drawText({scene: this, text: 'UPT', pos: ex.vec(243, 250), color: ex.Color.White, scale: 1});
     this.drawSelectButton(3, ex.vec(333, 171), engine);
-    drawText({scene: this, text: 'Panther', pos: ex.vec(333, 235), color: ex.Color.White, scale: 1});
+    drawText({scene: this, text: 'Piper', pos: ex.vec(333, 235), color: ex.Color.White, scale: 1});
     drawText({scene: this, text: 'UPB', pos: ex.vec(333, 250), color: ex.Color.White, scale: 1});
     this.drawSelectButton(4, ex.vec(423, 171), engine);
     drawText({scene: this, text: 'Roc', pos: ex.vec(423, 235), color: ex.Color.White, scale: 1});

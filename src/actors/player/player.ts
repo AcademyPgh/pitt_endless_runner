@@ -18,6 +18,7 @@ const enum States {
 
 const jumpMax = 200
 const jumpStrength = 350
+const diveSpeed = 200
 const playerXtarget = 50;
 // const recoveryVelocity = 10;
 
@@ -75,6 +76,11 @@ export class Player extends Actor {
         this.graphics.use(this.animations[this.state]);
         this.jumpTimer = 0;
         Resources.sounds.jump.play(.5)
+      }
+      else if(this.state === States.jump && this.vel.y < 0 && this.input?.justPressed('jump')){
+        this.vel.y = diveSpeed;
+        this.state = States.fall;
+        this.graphics.use(this.animations[this.state]);
       }
       else if(this.input?.justReleased('jump') && this.state === States.jump)
       {

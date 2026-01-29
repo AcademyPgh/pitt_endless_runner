@@ -28,10 +28,10 @@ class StartScreen extends ex.Scene {
     })
     drawText({
         scene: this, 
-        text: 'DASH', 
+        text: '10th ANNIVERSARY DASH', 
         pos: ex.vec(engine.drawWidth/2, 90), 
         color: ex.Color.White, 
-        scale: 4
+        scale: 2
     })
     drawText({
         scene: this, 

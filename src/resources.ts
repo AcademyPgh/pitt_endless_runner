@@ -71,11 +71,11 @@ const crates = [
 
 
 //character sheets here
-import pj from "./images/pjSheet.png";
-import pounce from "./images/pounceSheet.png";
-import upb from "./images/upbSheet.png";
-import bruiser from "./images/bruiserSheet.png";
-import roc from "./images/rocSheet.png";
+import pj from "./images/pjSheet1.png";
+import pounce from "./images/pounceSheet1.png";
+import upb from "./images/upbSheet1.png";
+import bruiser from "./images/bruiserSheet1.png";
+import roc from "./images/rocSheet1.png";
 const playableCharacters = [pj, bruiser, pounce, upb, roc]
 
 //birds
@@ -176,8 +176,8 @@ export const playerSheets = Resources.sheets.map(source => {
     grid: {
       columns: 6,
       rows: 1,
-      spriteWidth: 39,
-      spriteHeight: 34
+      spriteWidth: 32,
+      spriteHeight: 35
     }
 })
 })

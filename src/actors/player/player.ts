@@ -18,7 +18,7 @@ const enum States {
 
 const jumpMax = 200
 const jumpStrength = 350
-const diveSpeed = 200
+const diveSpeed = 150
 const playerXtarget = 50;
 // const recoveryVelocity = 10;
 
